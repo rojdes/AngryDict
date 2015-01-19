@@ -53,7 +53,7 @@ public class ClockService extends Service {
     private Runnable mUpdateTimeTask = new Runnable()
     {   public void run()
         {
-
+            Log.e(TAG, "=== GO-GO-SCREEN ===" + LocalPrefs.getPeriodShow(ClockService.this)*60*1000L);
             //add here show window;
             mDelayHandler.postDelayed(this, LocalPrefs.getPeriodShow(ClockService.this)*60*1000L);
         }
@@ -67,7 +67,6 @@ public class ClockService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO Auto-generated method stub
         return null;
     }
 

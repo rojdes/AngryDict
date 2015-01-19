@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import common.ScreenHelper;
+import common.pianters.ResizableView;
+import common.views.LockableScrollView;
 import me.rds.angrydictionary.LocalConsts;
 import me.rds.angrydictionary.LocalPrefs;
 import me.rds.angrydictionary.R;
@@ -85,6 +88,7 @@ public class PreferencesActivity extends ActionBarActivity {
         msbPeriodShow.setOnSeekBarChangeListener(mSeekBarChangelistener);
         msbAnswerTime.setOnSeekBarChangeListener(mSeekBarChangelistener);
         msbTransparency.setOnSeekBarChangeListener(mSeekBarChangelistener);
+        ((ResizableView)findViewById(R.id.rsw_prefs)).setScrollViewContainer((LockableScrollView)findViewById(R.id.scrollView));
     }
 
     @Override
@@ -104,11 +108,11 @@ public class PreferencesActivity extends ActionBarActivity {
     }
 
     private int getHeight(){
-//        int height=LocalPrefs.getPhantomScreenHeight(this);
-//        if (height>0)
-//            return height;
+        int h=LocalPrefs.getPhantomScreenHeight(this);
+        if (h>0)
+            return h;
         ScreenHelper.ScreenSizePx pxs=ScreenHelper.getSize(this);
-        int h= (int)(pxs.getHeight()*mrltScreenPhantom.getMeasuredWidth()/pxs.getWidth());
+        h= (int)(pxs.getHeight()*mrltScreenPhantom.getMeasuredWidth()/pxs.getWidth());
         LocalPrefs.setPhantomScreenHeight(this,h);
         return h;
     }

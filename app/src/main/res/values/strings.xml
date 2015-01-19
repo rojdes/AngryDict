@@ -7,7 +7,7 @@
     <string name="Period_between_show">Period between show (minutes)</string>
     <string name="Period_between_click_answer">Period between click answer (sec)</string>
     <string name="Transparency">Transparency</string>
-    <string name="Location">Location</string>
+    <string name="Location_and_size">Location and size</string>
     <string name="Disable">Disable</string>
     <string name="Enable">Enable</string>
 </resources>

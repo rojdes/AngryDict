@@ -1,4 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<common.views.LockableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -72,7 +72,7 @@
             style="@style/TextView.PrefsTitles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Location" />
+            android:text="@string/Location_and_size" />
 
         <RelativeLayout
             android:id="@+id/rlt_prefs_screen"
@@ -84,7 +84,14 @@
             android:layout_height="100dp"
             android:background="@drawable/bg_phantom_screen"
             android:layout_gravity="center_horizontal">
+
+            <common.pianters.ResizableView
+                android:id="@+id/rsw_prefs"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/red"/>
+
         </RelativeLayout>
 
     </LinearLayout>
-</ScrollView>
+</common.views.LockableScrollView>
