@@ -1,0 +1,23 @@
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="widget_tv_hour_margin">6dp</dimen>
+    <dimen name="widget_iv_timeperiod_margin">5dp</dimen>
+    <dimen name="widget_tv_minute_margin">12dp</dimen>
+    <dimen name="widget_tv_hour_textsize">20dp</dimen>
+
+    <dimen name="prefs_title_tv_padding">12dp</dimen>
+    <dimen name="prefs_title_tv_textsize">18dp</dimen>
+
+    <dimen name="prefs_values_tv_padding">7dp</dimen>
+    <dimen name="prefs_values_tv_textsize">14dp</dimen>
+
+    <dimen name="prefs_sb_padding">8dp</dimen>
+    <dimen name="prefs_sb_thumb_offset">-5dp</dimen>
+
+
+    <dimen name="prefs_top_icon_iv_size">80dp</dimen>
+    <dimen name="prefs_top_icon_iv_margin">10dp</dimen>
+
+
+</resources>

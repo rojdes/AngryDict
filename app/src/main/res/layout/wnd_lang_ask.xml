@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="wrap_content"
+    android:layout_height="wrap_content" android:orientation="vertical">
+
+    <TextView android:id="@+id/wndTvAsk" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp" android:gravity="center"
+        android:textColor="@android:color/white" android:textSize="28dp" />
+
+    <android.support.v7.widget.GridLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_gravity="center" app:columnCount="2"
+        app:orientation="horizontal">
+
+        <Button android:id="@+id/wndBtnAsk1" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_margin="10dp"
+            android:gravity="center" android:tag="0" android:text="Ask1" android:textSize="20dp" />
+
+        <Button android:id="@+id/wndBtnAsk2" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_margin="10dp" android:gravity="center"
+            android:tag="1" android:text="Ask2" android:textSize="20dp" />
+
+        <Button android:id="@+id/wndBtnAsk3" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_margin="10dp" android:gravity="center"
+            android:tag="2" android:text="Ask3" android:textSize="20dp" />
+
+        <Button android:id="@+id/wndBtnAsk4" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_margin="10dp" android:gravity="center"
+            android:tag="3" android:text="Ask4" android:textSize="20dp" />
+    </android.support.v7.widget.GridLayout>
+
+</LinearLayout>

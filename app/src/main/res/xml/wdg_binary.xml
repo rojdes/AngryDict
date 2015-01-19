@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/wdg_binary_clock" android:minHeight="200dp" android:minWidth="200dp"
+    android:updatePeriodMillis="8640000000"></appwidget-provider>

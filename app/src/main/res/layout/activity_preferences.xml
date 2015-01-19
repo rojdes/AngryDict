@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin">
+
+    <ImageView android:id="@+id/imageView"
+        android:layout_width="@dimen/prefs_top_icon_iv_size" android:layout_height="@dimen/prefs_top_icon_iv_size"
+        android:layout_gravity="center_horizontal" android:layout_margin="@dimen/prefs_top_icon_iv_margin"
+        android:scaleType="fitXY" android:src="@drawable/ic_prefs" />
+
+    <TextView android:id="@+id/textView" style="@style/TextView.PrefsTitles"
+        android:text="@string/Period_between_show" />
+
+    <SeekBar android:id="@+id/sb_prefs_show_time" style="@style/SeekBarPrefs" />
+
+    <TextView android:id="@+id/tv_prefs_period" style="@style/TextView.PrefsValues" />
+
+    <TextView android:id="@+id/text" style="@style/TextView.PrefsTitles"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="@string/Period_between_click_answer" />
+
+    <SeekBar android:id="@+id/sb_prefs__click_answer_time" style="@style/SeekBarPrefs"
+        android:indeterminate="false" />
+
+    <TextView android:id="@+id/tv_prefs_click_answer" style="@style/TextView.PrefsValues" />
+
+
+    <RelativeLayout android:id="@+id/rlt_position" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:layout_gravity="center_horizontal">
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,49 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="TextView.PrefsTitles" parent="android:Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/prefs_title_tv_padding</item>
+        <item name="android:textSize">@dimen/prefs_title_tv_textsize</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="TextView.PrefsValues" parent="android:Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/prefs_values_tv_padding</item>
+        <item name="android:textSize">@dimen/prefs_values_tv_textsize</item>
+        <item name="android:background">@drawable/bg_prefs_bar_value</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="SeekBarPrefs">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/prefs_sb_padding</item>
+        <item name="android:thumb">@drawable/ic_thumb</item>
+        <item name="android:thumbOffset">@dimen/prefs_sb_thumb_offset</item>
+        <item name="android:indeterminate">false</item>
+    </style>
+
+
+</resources>

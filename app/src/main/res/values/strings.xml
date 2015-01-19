@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AngryDict</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_preferences">PreferencesActivity</string>
+    <string name="Period_between_show">Period between show (minutes)</string>
+    <string name="Period_between_click_answer">Period between click answer (sec)</string>
+    <string name="Disable">Disable</string>
+    <string name="Enable">Enable</string>
+</resources>
