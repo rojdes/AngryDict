@@ -76,7 +76,7 @@ public class BinaryClockWidget extends AppWidgetProvider {
 
     private void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.wdg_binary_clock);
-        TimeUpdater.updateTime(views);
+        WidgetTimeUpdater.updateTime(views);
         initViewsifNeeded(context, views);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

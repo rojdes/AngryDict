@@ -22,7 +22,7 @@
         </activity>
 
         <activity android:name=".ui.activities.PreferencesActivity"
-            android:icon="@drawable/ic_prefs" android:label="@string/title_activity_preferences">
+            android:icon="@drawable/ic_prefs" android:label="@string/title_activity_preferences" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

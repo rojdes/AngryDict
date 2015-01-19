@@ -6,6 +6,8 @@
     <string name="title_activity_preferences">PreferencesActivity</string>
     <string name="Period_between_show">Period between show (minutes)</string>
     <string name="Period_between_click_answer">Period between click answer (sec)</string>
+    <string name="Transparency">Transparency</string>
+    <string name="Location">Location</string>
     <string name="Disable">Disable</string>
     <string name="Enable">Enable</string>
 </resources>

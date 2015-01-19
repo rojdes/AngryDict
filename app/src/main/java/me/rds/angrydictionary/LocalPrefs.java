@@ -76,6 +76,16 @@ public class LocalPrefs {
     }
 
 
+    public static void setPhantomScreenHeight(Context context, int value) {
+        initPrefsIfNeeded(context);
+        mEditor.putInt(Key.PHANTOM_HEIGHT, value).apply();
+    }
+
+    public static int getPhantomScreenHeight(Context context) {
+        initPrefsIfNeeded(context);
+        return mPrefs.getInt(Key.PHANTOM_HEIGHT, -1);
+    }
+
     private static void initPrefsIfNeeded(Context context) {
         if (mPrefs == null) {
             mPrefs = new SecurePreferences(context);
@@ -83,14 +93,14 @@ public class LocalPrefs {
         }
     }
 
-
     interface Key {
-        public static String FIRST_START = "first_start";
-        public static String PERIOD = "period";
-        public static String TIME_ANSWER = "time_answer";
-        public static String SERVER_IP = "ip";
-        public static String SERVER_PORT = "port";
-        public static String TRANSPARENCY = "transparency";
+        static String FIRST_START = "first_start";
+        static String PERIOD = "period";
+        static String TIME_ANSWER = "time_answer";
+        static String SERVER_IP = "ip";
+        static String SERVER_PORT = "port";
+        static String TRANSPARENCY = "transparency";
+        static String PHANTOM_HEIGHT="ph_height";
 
     }
 

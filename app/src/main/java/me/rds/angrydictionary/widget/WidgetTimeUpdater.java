@@ -7,7 +7,7 @@ import java.util.Calendar;
 
 import me.rds.angrydictionary.R;
 
-class TimeUpdater {
+class WidgetTimeUpdater {
 
 
     public static void updateTime(RemoteViews view) {

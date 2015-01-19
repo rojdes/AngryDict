@@ -30,15 +30,19 @@ public class WidgetApp extends Application {
     }
 
     private void onFirstStartApk() {
-        Log.e(TAG, "is first start = " + LocalPrefs.isFirstStart(this));
         if (LocalPrefs.isFirstStart(this)) {
-            File f = new File(LocalConsts.EXT_FOLDER_MP3);
-            if (!f.exists())
-                f.mkdirs();
+           generateFoldersIfNeeded();
             LocalPrefs.setWasFirstStart(this);
             Log.e(TAG, "is first start = " + LocalPrefs.isFirstStart(this));
         }
     }
 
-
+    private void generateFoldersIfNeeded(){
+        File f = new File(LocalConsts.EXT_FOLDER_MP3);
+        if (!f.exists())
+            f.mkdirs();
+        File f2 = new File(LocalConsts.EXT_FOLDER_DB);
+        if (!f2.exists())
+            f2.mkdirs();
+    }
 }

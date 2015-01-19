@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PixelFormat;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,6 +24,7 @@ import common.ScreenHelper.ScreenSizePx;
 import common.WindowHelper;
 import common.WindowHelper.OnClickListener;
 import me.rds.angrydictionary.LocalIntents;
+import me.rds.angrydictionary.LocalPrefs;
 import me.rds.angrydictionary.R;
 import me.rds.angrydictionary.dictionary.DictionaryManager;
 import me.rds.angrydictionary.dictionary.model.Language;
@@ -37,6 +39,7 @@ public class ClockService extends Service {
 
 
     private final Intent mTimeIntent = new Intent(LocalIntents.ACTION_TIME);
+
     private final BroadcastReceiver mTimeTickReciver = new BroadcastReceiver() {
 
         @Override
@@ -45,9 +48,22 @@ public class ClockService extends Service {
             context.sendBroadcast(mTimeIntent);
         }
     };
+
+
+    private Runnable mUpdateTimeTask = new Runnable()
+    {   public void run()
+        {
+
+            //add here show window;
+            mDelayHandler.postDelayed(this, LocalPrefs.getPeriodShow(ClockService.this)*60*1000L);
+        }
+    };
+
+
     private Intent mPlayIntent;
-    private int[] ids = new int[]{R.id.wndBtnAsk1, R.id.wndBtnAsk2, R.id.wndBtnAsk3, R.id.wndBtnAsk4};
-    private WindowHelper mWindowHelper = new WindowHelper();
+    protected int[] ids = new int[]{R.id.wndBtnAsk1, R.id.wndBtnAsk2, R.id.wndBtnAsk3, R.id.wndBtnAsk4};
+    protected WindowHelper mWindowHelper = new WindowHelper();
+    protected Handler mDelayHandler = new Handler();
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -58,10 +74,10 @@ public class ClockService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        mDelayHandler.postDelayed(mUpdateTimeTask, LocalPrefs.getPeriodShow(ClockService.this)*60*1000L);
         mPlayIntent = new Intent(ClockService.this, MediaIntentService.class);
         this.sendBroadcast(mTimeIntent);
         this.registerReceiver(mTimeTickReciver, new IntentFilter(Intent.ACTION_TIME_TICK));
-
     }
 
     @Override
@@ -132,6 +148,7 @@ public class ClockService extends Service {
     @Override
     public void onLowMemory() {
         super.onLowMemory();
+        mDelayHandler.removeCallbacks(mUpdateTimeTask);
         Log.e(TAG, "onLowMemory");
     }
 
@@ -139,6 +156,7 @@ public class ClockService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy");
+        mDelayHandler.removeCallbacks(mUpdateTimeTask);
         unregisterReceiver(mTimeTickReciver);
     }
 
@@ -150,5 +168,11 @@ public class ClockService extends Service {
         this.sendBroadcast(intent);
 
     }
+
+
+
+
+
+
 
 }

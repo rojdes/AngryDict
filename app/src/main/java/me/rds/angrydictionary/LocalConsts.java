@@ -6,6 +6,8 @@ public interface LocalConsts {
 
     public static String EXT_FOLDER_MP3 = Environment.getExternalStorageDirectory().toString() + "/language/mp3/";
 
+    public static String EXT_FOLDER_DB = Environment.getExternalStorageDirectory().toString() + "/language/db/";
+
     public static int MAX_PERIOD_SHOW = 10;
 
     public static int MAX_TIME_ANSWER = 5;
