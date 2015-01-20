@@ -18,4 +18,8 @@ public interface LocalConsts {
 
     public static int TRANSPARENCY = 100;
 
+    public static final String LINK_LIST="https://www.dropbox.com/s/slhojiy2ujta8vt/list?dl=0";
+
+    public static final String LINK_ALT_LIST="https://dl.dropboxusercontent.com/s/slhojiy2ujta8vt/list?dl=0";
+
 }
