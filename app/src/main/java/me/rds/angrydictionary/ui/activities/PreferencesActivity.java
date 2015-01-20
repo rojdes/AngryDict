@@ -6,17 +6,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import common.ScreenHelper;
-import common.pianters.ResizableView;
+import common.views.ResizableView;
 import common.views.LockableScrollView;
 import me.rds.angrydictionary.LocalConsts;
 import me.rds.angrydictionary.LocalPrefs;
 import me.rds.angrydictionary.R;
+import me.rds.angrydictionary.communications.https.HttpsClient;
+import me.rds.angrydictionary.communications.https.listeners.OnGetContentListener;
 import me.rds.angrydictionary.ui.activities.adapters.DifficultyAdapter;
 import me.rds.angrydictionary.ui.activities.adapters.model.DifficultyLevel;
 
@@ -29,6 +30,13 @@ public class PreferencesActivity extends ActionBarActivity {
     private static final String TAG_PERIOD = "p";
     private static final String TAG_ANSWER = "a";
     private static final String TAG_TRANSPARENCY = "t";
+
+    private SeekBar msbPeriodShow, msbAnswerTime, msbTransparency;
+    private TextView mtvPeriodShow, mtvAnswerClick, mtvTransparency;
+    private Spinner mspnDifficulty;
+
+    private RelativeLayout mrltScreenPhantom;
+    private ResizableView mWindowView;
 
 
     private SeekBar.OnSeekBarChangeListener mSeekBarChangelistener = new SeekBar.OnSeekBarChangeListener() {
@@ -60,7 +68,7 @@ public class PreferencesActivity extends ActionBarActivity {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Log.e(TAG, "POSITION IS  = " + position + "; and is level is = " + DifficultyLevel.getLevelsList(PreferencesActivity.this)[position]);
-
+            Log.e(TAG," NEW  = " + DifficultyLevel.getParamsOf(PreferencesActivity.this, position).toString());
         }
 
         @Override
@@ -69,19 +77,18 @@ public class PreferencesActivity extends ActionBarActivity {
 
 
 
-
-    private SeekBar msbPeriodShow, msbAnswerTime, msbTransparency;
-    private TextView mtvPeriodShow, mtvAnswerClick, mtvTransparency;
-    private Spinner mspnDifficulty;
-
-    private RelativeLayout mrltScreenPhantom;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
         findViews();
         engineViews();
+        new HttpsClient().start(new OnGetContentListener() {
+            @Override
+            public void onGetContent(String msg, Exception error) {
+                Log.e(TAG, "MESSAGE = " + msg);
+            }
+        });
     }
 
     private void findViews() {
@@ -93,6 +100,7 @@ public class PreferencesActivity extends ActionBarActivity {
         mtvTransparency=(TextView)findViewById(R.id.tv_prefs_transparency);
         mrltScreenPhantom =(RelativeLayout)findViewById(R.id.rlt_prefs_screen);
         mspnDifficulty=(Spinner)findViewById(R.id.spn_prefs_difficulty);
+        mWindowView= (ResizableView)findViewById(R.id.rsw_prefs);
     }
 
     private void engineViews() {

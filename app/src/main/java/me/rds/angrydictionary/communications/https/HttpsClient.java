@@ -1,23 +1,17 @@
 package me.rds.angrydictionary.communications.https;
 
-import android.util.Log;
-
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.cert.Certificate;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLPeerUnverifiedException;
 
 import me.rds.angrydictionary.LocalConsts;
+import me.rds.angrydictionary.communications.https.listeners.OnGetContentListener;
 
 /**
  * Created by D1m11n on 20.01.2015.
@@ -29,7 +23,6 @@ public class HttpsClient {
         if(con!=null){
 
             try {
-
                 System.out.println("Response Code : " + con.getResponseCode());
                 System.out.println("Cipher Suite : " + con.getCipherSuite());
                 System.out.println("\n");
@@ -54,39 +47,43 @@ public class HttpsClient {
         }
     }
 
-    public void start(){
+    public void start(final OnGetContentListener listener){
+        if (listener==null) return;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                testIt();
+                testIt(listener);
             }
         }).start();
     }
 
-    private  void testIt(){
+    private  void testIt(final OnGetContentListener listener){
         try {
-            URL url = new URL(LocalConsts.LINK_ALT_LIST);
+            URL url = new URL(LocalConsts.LINK_DB_LIST);
             HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
-            print_content(con);
+            print_content(con, listener);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            listener.onGetContent(null, e);
         } catch (IOException e) {
-            e.printStackTrace();
+            listener.onGetContent(null, e);
         }
     }
 
-    private void print_content(HttpsURLConnection con){
-        if(con!=null){
-            try {
-                BufferedReader br =  new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String input;
-                while ((input = br.readLine()) != null){
-                    Log.e("HTTPS", "==============" + input);
-                }
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    private void print_content(HttpsURLConnection con, final OnGetContentListener listener) {
+        if (con == null) {
+            listener.onGetContent(null, new NullPointerException("Https connection is null; "));
+            return;
+        }
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            StringBuilder bb = new StringBuilder();
+            String input;
+            while ((input = br.readLine()) != null)
+                bb.append(input);
+            br.close();
+            listener.onGetContent(bb.toString(), null);
+        } catch (IOException e) {
+            listener.onGetContent(null, e);
         }
     }
 
