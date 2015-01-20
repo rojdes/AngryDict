@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="difficulties" >
+        <item>I can</item>
+        <item>Bring it on</item>
+        <item>Vexation</item>
+        <item>Hardcore</item>
+        <item>Nightmare!</item>
+        <item>Custom</item>
+    </string-array>
+</resources>

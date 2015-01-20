@@ -22,6 +22,9 @@ public final class ResizableView extends View implements View.OnTouchListener {
     private int xDelta;
     private int yDelta;
 
+    private int mCurrentWidth;
+    private int mCurrentHeight;
+
     protected LockableScrollView mScrollViewContainer;
 
     private int boundsColor=getResources().getColor(R.color.red);
@@ -69,39 +72,43 @@ public final class ResizableView extends View implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
         final int X = (int) event.getRawX();
         final int Y = (int) event.getRawY();
+        setParentActionInTouch(event.getAction() & MotionEvent.ACTION_MASK);
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
-                if(mScrollViewContainer!=null)
-                  mScrollViewContainer.setScrollingEnabled(false);
-                 RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) ResizableView.this.getLayoutParams();
+                RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) ResizableView.this.getLayoutParams();
                 xDelta = X - lParams.leftMargin;
                 yDelta = Y - lParams.topMargin;
                 break;
-            case MotionEvent.ACTION_UP:
-                if(mScrollViewContainer!=null)
-                mScrollViewContainer.setScrollingEnabled(true);
-                break;
-            case MotionEvent.ACTION_POINTER_DOWN:
-                if(mScrollViewContainer!=null)
-                    mScrollViewContainer.setScrollingEnabled(false);
-                break;
-            case MotionEvent.ACTION_POINTER_UP:
-                if(mScrollViewContainer!=null)
-                    mScrollViewContainer.setScrollingEnabled(true);
-                break;
             case MotionEvent.ACTION_MOVE:
-                if(mScrollViewContainer!=null)
-                    mScrollViewContainer.setScrollingEnabled(false);
                 RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) ResizableView.this.getLayoutParams();
                 layoutParams.leftMargin = X - xDelta;
                 layoutParams.topMargin = Y - yDelta;
-//                layoutParams.rightMargin = -250;
-//                layoutParams.bottomMargin = -250;
                 ResizableView.this.setLayoutParams(layoutParams);
                 break;
         }
         ResizableView.this.invalidate();
         return true;
+    }
+
+
+
+    private void setParentActionInTouch(int action){
+        switch(action){
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_POINTER_UP:
+                  setParentScrolling(true);
+                break;
+            case  MotionEvent.ACTION_POINTER_DOWN:
+            case  MotionEvent.ACTION_MOVE:
+            case MotionEvent.ACTION_DOWN:
+                setParentScrolling(false);
+                break;
+        }
+    }
+
+    private void setParentScrolling(boolean enable){
+        if(mScrollViewContainer!=null)
+            mScrollViewContainer.setScrollingEnabled(enable);
     }
 
 

@@ -74,6 +74,12 @@
             android:layout_height="wrap_content"
             android:text="@string/Location_and_size" />
 
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spn_prefs_difficulty"
+            android:layout_gravity="center_horizontal" />
+
         <RelativeLayout
             android:id="@+id/rlt_prefs_screen"
             android:layout_width="match_parent"

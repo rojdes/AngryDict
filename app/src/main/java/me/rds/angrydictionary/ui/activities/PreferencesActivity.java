@@ -3,9 +3,12 @@ package me.rds.angrydictionary.ui.activities;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import common.ScreenHelper;
@@ -14,6 +17,8 @@ import common.views.LockableScrollView;
 import me.rds.angrydictionary.LocalConsts;
 import me.rds.angrydictionary.LocalPrefs;
 import me.rds.angrydictionary.R;
+import me.rds.angrydictionary.ui.activities.adapters.DifficultyAdapter;
+import me.rds.angrydictionary.ui.activities.adapters.model.DifficultyLevel;
 
 public class PreferencesActivity extends ActionBarActivity {
 
@@ -51,9 +56,23 @@ public class PreferencesActivity extends ActionBarActivity {
         }
     };
 
+    private AdapterView.OnItemSelectedListener mOnItemSelected = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Log.e(TAG, "POSITION IS  = " + position + "; and is level is = " + DifficultyLevel.getLevelsList(PreferencesActivity.this)[position]);
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {}
+    };
+
+
+
 
     private SeekBar msbPeriodShow, msbAnswerTime, msbTransparency;
     private TextView mtvPeriodShow, mtvAnswerClick, mtvTransparency;
+    private Spinner mspnDifficulty;
 
     private RelativeLayout mrltScreenPhantom;
 
@@ -73,6 +92,7 @@ public class PreferencesActivity extends ActionBarActivity {
         mtvAnswerClick = (TextView) findViewById(R.id.tv_prefs_click_answer);
         mtvTransparency=(TextView)findViewById(R.id.tv_prefs_transparency);
         mrltScreenPhantom =(RelativeLayout)findViewById(R.id.rlt_prefs_screen);
+        mspnDifficulty=(Spinner)findViewById(R.id.spn_prefs_difficulty);
     }
 
     private void engineViews() {
@@ -88,7 +108,9 @@ public class PreferencesActivity extends ActionBarActivity {
         msbPeriodShow.setOnSeekBarChangeListener(mSeekBarChangelistener);
         msbAnswerTime.setOnSeekBarChangeListener(mSeekBarChangelistener);
         msbTransparency.setOnSeekBarChangeListener(mSeekBarChangelistener);
-        ((ResizableView)findViewById(R.id.rsw_prefs)).setScrollViewContainer((LockableScrollView)findViewById(R.id.scrollView));
+        mspnDifficulty.setAdapter(DifficultyAdapter.getInstance(this));
+        mspnDifficulty.setOnItemSelectedListener(mOnItemSelected);
+        ((ResizableView)findViewById(R.id.rsw_prefs)).setScrollViewContainer((LockableScrollView) findViewById(R.id.scrollView));
     }
 
     @Override
