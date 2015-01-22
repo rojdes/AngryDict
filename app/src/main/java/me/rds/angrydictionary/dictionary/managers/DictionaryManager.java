@@ -1,16 +1,23 @@
-package me.rds.angrydictionary.dictionary;
+package me.rds.angrydictionary.dictionary.managers;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Random;
 
 import de.greenrobot.dao.query.Query;
+import me.rds.angrydictionary.AppConsts;
+import me.rds.angrydictionary.communications.https.HttpsClient;
+import me.rds.angrydictionary.communications.https.listeners.OnGetContentListener;
 import me.rds.angrydictionary.dictionary.db.generators.DaoMaster;
 import me.rds.angrydictionary.dictionary.db.generators.DaoSession;
 import me.rds.angrydictionary.dictionary.db.model.WordDao;
+import me.rds.angrydictionary.dictionary.listeners.DictionaryActionsCallBack;
+import me.rds.angrydictionary.dictionary.model.DBFileInfo;
 import me.rds.angrydictionary.dictionary.model.Language;
 import me.rds.angrydictionary.dictionary.model.TrueWord;
 import me.rds.angrydictionary.dictionary.model.Word;
@@ -46,7 +53,7 @@ public class DictionaryManager {
     private Context mContext;
 
     private DictionaryManager(Context context) {
-        mContext = context;
+        mContext = context.getApplicationContext();
         mDaoMaster = new DaoMaster(new DaoMaster.DevOpenHelper(mContext, DB_NAME, null).getWritableDatabase(), DaoMaster.getDbVersionFromManifest(context));
         Log.e(TAG, "VERSION OF DB IS =  " + mDaoMaster.getDatabase().getVersion());
         mDaoSession = mDaoMaster.newSession();
@@ -57,6 +64,34 @@ public class DictionaryManager {
             mInstance = new DictionaryManager(context);
         return mInstance;
     }
+
+
+
+    @Deprecated
+    /**
+     *
+     * @param callBack return in callback on OK DBServerFile.Array as second param, Exception object on ERROR
+     */
+    public void updateDBFromServer(final DictionaryActionsCallBack callBack){
+        new HttpsClient().start(AppConsts.LINK_DB_LIST, true, new OnGetContentListener() {
+
+            @Override
+            public void onGetContent(String msg, Exception error) {
+                if (msg == null)
+                    callBack.callback(DictionaryActionsCallBack.ERROR, error);
+                else {
+                    DBFileInfo.Array array = new Gson().fromJson(msg, DBFileInfo.Array.class);
+                    callBack.callback(DictionaryActionsCallBack.OK, array);
+                }
+            }
+        });
+    }
+
+//    public void updateDBFromServerUsingBroadcast(){
+//        Intent intent= new Intent(AppIntents.Action.LOAD);
+//        intent.putExtra(AppIntents.Extra.LINK,ApplConsts.LINK_DB_LIST);
+//
+//    }
 
     public void addWord(Word w) {
         mDaoSession.getWordDao().insertOrReplace(w);

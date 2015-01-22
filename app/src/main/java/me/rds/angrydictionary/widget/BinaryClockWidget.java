@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import me.rds.angrydictionary.LocalIntents;
+import me.rds.angrydictionary.AppIntents;
 import me.rds.angrydictionary.R;
 
 
@@ -64,7 +64,7 @@ public class BinaryClockWidget extends AppWidgetProvider {
         //super.onReceive(context, intent);
         Log.e(TAG, "ON RECEIVE ");
         if (intent == null || intent.getAction() == null) return;
-        if (intent.getAction().equals(LocalIntents.ACTION_TIME) || intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
+        if (intent.getAction().equals(AppIntents.Action.TIME) || intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             ComponentName thisAppWidget = new ComponentName(context.getPackageName(), getClass().getName());
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int ids[] = appWidgetManager.getAppWidgetIds(thisAppWidget);
@@ -95,14 +95,14 @@ public class BinaryClockWidget extends AppWidgetProvider {
 
     private void clickPrefs(Context context, RemoteViews views) {
         Intent intent = new Intent(context, ClockService.class);
-        intent.setAction(LocalIntents.ACTION_WIDGET_CLICK_PREFS);
+        intent.setAction(AppIntents.Action.WIDGET_CLICK_PREFS);
         PendingIntent pIntent = PendingIntent.getService(context, 0, intent, 0);
         views.setOnClickPendingIntent(R.id.iv_prefs, pIntent);
     }
 
     private void clickAmPm(Context context, RemoteViews views) {
         Intent intent = new Intent(context, ClockService.class);
-        intent.setAction(LocalIntents.ACTION_WIDGET_CLICK_AM_PM);
+        intent.setAction(AppIntents.Action.WIDGET_CLICK_AM_PM);
         PendingIntent pIntent = PendingIntent.getService(context, 0, intent, 0);
         views.setOnClickPendingIntent(R.id.iv_am, pIntent);
         views.setOnClickPendingIntent(R.id.iv_pm, pIntent);

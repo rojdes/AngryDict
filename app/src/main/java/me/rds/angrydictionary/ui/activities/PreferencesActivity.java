@@ -1,5 +1,7 @@
 package me.rds.angrydictionary.ui.activities;
 
+import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -13,11 +15,14 @@ import android.widget.TextView;
 import common.ScreenHelper;
 import common.views.ResizableView;
 import common.views.LockableScrollView;
-import me.rds.angrydictionary.LocalConsts;
-import me.rds.angrydictionary.LocalPrefs;
+import me.rds.angrydictionary.AppConsts;
+import me.rds.angrydictionary.AppIntents;
+import me.rds.angrydictionary.AppPrefs;
 import me.rds.angrydictionary.R;
-import me.rds.angrydictionary.communications.https.HttpsClient;
-import me.rds.angrydictionary.communications.https.listeners.OnGetContentListener;
+import me.rds.angrydictionary.dictionary.listeners.DictionaryActionsCallBack;
+import me.rds.angrydictionary.dictionary.managers.DictionaryManager;
+import me.rds.angrydictionary.dictionary.model.DBFileInfo;
+import me.rds.angrydictionary.services.CommunicationService;
 import me.rds.angrydictionary.ui.activities.adapters.DifficultyAdapter;
 import me.rds.angrydictionary.ui.activities.adapters.model.DifficultyLevel;
 
@@ -83,12 +88,7 @@ public class PreferencesActivity extends ActionBarActivity {
         setContentView(R.layout.activity_preferences);
         findViews();
         engineViews();
-        new HttpsClient().start(new OnGetContentListener() {
-            @Override
-            public void onGetContent(String msg, Exception error) {
-                Log.e(TAG, "MESSAGE = " + msg);
-            }
-        });
+
     }
 
     private void findViews() {
@@ -104,12 +104,12 @@ public class PreferencesActivity extends ActionBarActivity {
     }
 
     private void engineViews() {
-        msbPeriodShow.setMax(LocalConsts.MAX_PERIOD_SHOW - 1);
-        msbAnswerTime.setMax(LocalConsts.MAX_TIME_ANSWER - 1);
-        msbPeriodShow.setProgress(LocalPrefs.getPeriodShow(this) - 1);
-        msbAnswerTime.setProgress(LocalPrefs.getTimeAnswer(this) - 1);
-        msbTransparency.setMax(LocalConsts.TRANSPARENCY);
-        msbTransparency.setProgress(LocalPrefs.getTransparency(this));
+        msbPeriodShow.setMax(AppConsts.MAX_PERIOD_SHOW - 1);
+        msbAnswerTime.setMax(AppConsts.MAX_TIME_ANSWER - 1);
+        msbPeriodShow.setProgress(AppPrefs.getPeriodShow(this) - 1);
+        msbAnswerTime.setProgress(AppPrefs.getTimeAnswer(this) - 1);
+        msbTransparency.setMax(AppConsts.TRANSPARENCY);
+        msbTransparency.setProgress(AppPrefs.getTransparency(this));
         msbPeriodShow.setTag(TAG_PERIOD);
         msbAnswerTime.setTag(TAG_ANSWER);
         msbTransparency.setTag(TAG_TRANSPARENCY);
@@ -125,11 +125,19 @@ public class PreferencesActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         buildScreenPhantom();
-        mtvPeriodShow.setText(String.valueOf(LocalPrefs.getPeriodShow(this)));
-        mtvAnswerClick.setText(String.valueOf(LocalPrefs.getTimeAnswer(this)));
-        mtvTransparency.setText(String.valueOf(LocalPrefs.getTransparency(this)));
+        mtvPeriodShow.setText(String.valueOf(AppPrefs.getPeriodShow(this)));
+        mtvAnswerClick.setText(String.valueOf(AppPrefs.getTimeAnswer(this)));
+        mtvTransparency.setText(String.valueOf(AppPrefs.getTransparency(this)));
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        Intent intent= new Intent(this, CommunicationService.class);
+        intent.setAction(AppIntents.Action.LOAD);
+        intent.putExtra(AppIntents.Extra.UPDATE_DICT,"");
+        startService(intent);
+    }
 
     private void buildScreenPhantom(){
        Log.e(TAG, "measured = " + mrltScreenPhantom.getMeasuredWidth() + ", real = " + mrltScreenPhantom.getWidth());
@@ -138,20 +146,20 @@ public class PreferencesActivity extends ActionBarActivity {
     }
 
     private int getHeight(){
-        int h=LocalPrefs.getPhantomScreenHeight(this);
+        int h= AppPrefs.getPhantomScreenHeight(this);
         if (h>0)
             return h;
         ScreenHelper.ScreenSizePx pxs=ScreenHelper.getSize(this);
         h= (int)(pxs.getHeight()*mrltScreenPhantom.getMeasuredWidth()/pxs.getWidth());
-        LocalPrefs.setPhantomScreenHeight(this,h);
+        AppPrefs.setPhantomScreenHeight(this, h);
         return h;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        LocalPrefs.setPeriodShow(this, Integer.valueOf(mtvPeriodShow.getText().toString()));
-        LocalPrefs.setTimeAnswer(this, Integer.valueOf(mtvAnswerClick.getText().toString()));
-        LocalPrefs.setTransparency(this, Integer.valueOf(mtvTransparency.getText().toString()));
+        AppPrefs.setPeriodShow(this, Integer.valueOf(mtvPeriodShow.getText().toString()));
+        AppPrefs.setTimeAnswer(this, Integer.valueOf(mtvAnswerClick.getText().toString()));
+        AppPrefs.setTransparency(this, Integer.valueOf(mtvTransparency.getText().toString()));
     }
 }

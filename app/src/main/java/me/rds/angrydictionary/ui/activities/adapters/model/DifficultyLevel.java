@@ -30,32 +30,35 @@ public final class DifficultyLevel {
      * @param level - index in array; last index is ALWAYS CUSTOM
      * @return WindowParams
      */
-    public static  WindowParams getParamsOf(Context context,int level){
+    public static WindowParams getParamsOf(Context context,int level){
+        if (level<0) return null;
         getLevelsList(context);
+        if(level<listOfLevels.length-1)
+           return calculatePreinstalled(context, level);
+        else
+            return getCustomParams(context);
+    }
+
+    private static WindowParams calculatePreinstalled(Context context,int level){
         WindowParams params= new WindowParams();
-        if(level<listOfLevels.length-1){
-            params.topLeftCorner=new Point(0,0);
-            params.relativeWidth=1.0F;
-            params.relativeHeight=1.0F/(listOfLevels.length -level); //CHECK
-        }else{
-            //ADD FROM USER
-        }
+        ScreenHelper.ScreenSizePx px=ScreenHelper.getSize(context);
+        float item=(px.getHeight()/2/(listOfLevels.length -1));
+        params.topLeftCorner=new Point((int)item*level ,0);
+        params.relativeWidth=1.0F;
+        params.relativeHeight=item*(2*level + 1 )/px.getHeight();
         return params;
     }
+
+    private static WindowParams getCustomParams(Context context) {
+        return null;
+    }
+
 
     private static void getScreenSize(Context context){
 
     }
 
 
-    public static class WindowParams{
-
-        public Point topLeftCorner;
-
-        public float relativeWidth;
-
-        public float relativeHeight;
-    }
 
 
 

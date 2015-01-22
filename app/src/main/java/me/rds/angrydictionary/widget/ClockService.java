@@ -23,10 +23,10 @@ import common.ScreenHelper;
 import common.ScreenHelper.ScreenSizePx;
 import common.WindowHelper;
 import common.WindowHelper.OnClickListener;
-import me.rds.angrydictionary.LocalIntents;
-import me.rds.angrydictionary.LocalPrefs;
+import me.rds.angrydictionary.AppIntents;
+import me.rds.angrydictionary.AppPrefs;
 import me.rds.angrydictionary.R;
-import me.rds.angrydictionary.dictionary.DictionaryManager;
+import me.rds.angrydictionary.dictionary.managers.DictionaryManager;
 import me.rds.angrydictionary.dictionary.model.Language;
 import me.rds.angrydictionary.dictionary.model.TrueWord;
 import me.rds.angrydictionary.services.media.MediaIntentService;
@@ -38,7 +38,7 @@ public class ClockService extends Service {
     private static final String TAG = "CLOCK_SERRVICE";
 
 
-    private final Intent mTimeIntent = new Intent(LocalIntents.ACTION_TIME);
+    private final Intent mTimeIntent = new Intent(AppIntents.Action.TIME);
 
     private final BroadcastReceiver mTimeTickReciver = new BroadcastReceiver() {
 
@@ -53,9 +53,9 @@ public class ClockService extends Service {
     private Runnable mUpdateTimeTask = new Runnable()
     {   public void run()
         {
-            Log.e(TAG, "=== GO-GO-SCREEN ===" + LocalPrefs.getPeriodShow(ClockService.this)*60*1000L);
+            Log.e(TAG, "=== GO-GO-SCREEN ===" + AppPrefs.getPeriodShow(ClockService.this)*60*1000L);
             //add here show window;
-            mDelayHandler.postDelayed(this, LocalPrefs.getPeriodShow(ClockService.this)*60*1000L);
+            mDelayHandler.postDelayed(this, AppPrefs.getPeriodShow(ClockService.this)*60*1000L);
         }
     };
 
@@ -73,7 +73,7 @@ public class ClockService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mDelayHandler.postDelayed(mUpdateTimeTask, LocalPrefs.getPeriodShow(ClockService.this)*60*1000L);
+        mDelayHandler.postDelayed(mUpdateTimeTask, AppPrefs.getPeriodShow(ClockService.this)*60*1000L);
         mPlayIntent = new Intent(ClockService.this, MediaIntentService.class);
         this.sendBroadcast(mTimeIntent);
         this.registerReceiver(mTimeTickReciver, new IntentFilter(Intent.ACTION_TIME_TICK));
@@ -84,9 +84,9 @@ public class ClockService extends Service {
         if (intent == null || intent.getAction() == null)
             return Service.START_STICKY;
         Log.e(TAG, "intent = " + intent.getAction());
-        if (intent.getAction().equals(LocalIntents.ACTION_WIDGET_CLICK_AM_PM))
+        if (intent.getAction().equals(AppIntents.Action.WIDGET_CLICK_AM_PM))
             onClickWidgetAmPmAction();
-        if (intent.getAction().equals(LocalIntents.ACTION_WIDGET_CLICK_PREFS))
+        if (intent.getAction().equals(AppIntents.Action.WIDGET_CLICK_PREFS))
             onClickWidgetPrefsAction();
         return Service.START_STICKY;
     }
@@ -121,11 +121,11 @@ public class ClockService extends Service {
             public void onClick(Object tag) {
                 if (Integer.valueOf((String) tag) == w.trueWordNumber) {
                     mWindowHelper.remove(ClockService.this);
-                    mPlayIntent.setAction(LocalIntents.ACTION_PLAY_WORD);
-                    mPlayIntent.putExtra(LocalIntents.EXTRA_PLAY_WORD, "offer.mp3");
+                    mPlayIntent.setAction(AppIntents.Action.PLAY_WORD);
+                    mPlayIntent.putExtra(AppIntents.Extra.PLAY_WORD, "offer.mp3");
                 } else {
                     Log.e("CLOCK_SERVICE", "ELSE");
-                    mPlayIntent.setAction(LocalIntents.ACTION_PLAY_ERROR);
+                    mPlayIntent.setAction(AppIntents.Action.PLAY_ERROR);
                 }
                 ClockService.this.startService(mPlayIntent);
             }

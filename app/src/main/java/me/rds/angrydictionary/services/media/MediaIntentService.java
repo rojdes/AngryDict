@@ -8,8 +8,8 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.Random;
 
-import me.rds.angrydictionary.LocalConsts;
-import me.rds.angrydictionary.LocalIntents;
+import me.rds.angrydictionary.AppConsts;
+import me.rds.angrydictionary.AppIntents;
 
 public class MediaIntentService extends IntentService {
 
@@ -27,15 +27,14 @@ public class MediaIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         if (intent == null || intent.getAction() == null) return;
-        if (intent.getAction().equals(LocalIntents.ACTION_PLAY_ERROR)) {
+        if (intent.getAction().equals(AppIntents.Action.PLAY_ERROR)) {
             Log.e(THREAD_NAME_FOR_DEBUG, "LocalIntents.ACTION_PLAY_ERROR");
             startPlayError();
         }
-        if (intent.getAction().equals(LocalIntents.ACTION_PLAY_WORD)) {
-            startPlayWord(intent.getStringExtra(LocalIntents.EXTRA_PLAY_WORD));
+        if (intent.getAction().equals(AppIntents.Action.PLAY_WORD)) {
+            startPlayWord(intent.getStringExtra(AppIntents.Action.PLAY_WORD));
         }
     }
-
 
     private void startPlayError() {
         int r = new Random().nextInt(5);
@@ -50,6 +49,6 @@ public class MediaIntentService extends IntentService {
     private void startPlayWord(String mp3) {
         if (TextUtils.isEmpty(mp3)) return;
         Log.e(THREAD_NAME_FOR_DEBUG, mp3);
-        mMediaPlayer.playAudio(LocalConsts.EXT_FOLDER_MP3 + mp3);
+        mMediaPlayer.playAudio(AppConsts.EXT_FOLDER_MP3 + mp3);
     }
 }

@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-import me.rds.angrydictionary.LocalPrefs;
+import me.rds.angrydictionary.AppPrefs;
 
 /**
  * NEED CHECK AND UPDATE
@@ -24,7 +24,7 @@ public class Client {
         String data = null;
         Socket socketin = null;
         try {
-            socketin = new Socket(LocalPrefs.getServerIp(context), LocalPrefs.getServerPort(context));
+            socketin = new Socket(AppPrefs.getServerIp(context), AppPrefs.getServerPort(context));
             BufferedWriter outstream = new BufferedWriter(
                     new OutputStreamWriter(socketin.getOutputStream()));
             BufferedReader instream = new BufferedReader(
@@ -51,7 +51,7 @@ public class Client {
         String data = null;
         Socket socketin = null;
         try {
-            socketin = new Socket(LocalPrefs.getServerIp(context), LocalPrefs.getServerPort(context));
+            socketin = new Socket(AppPrefs.getServerIp(context), AppPrefs.getServerPort(context));
             socketin.setReceiveBufferSize(1024);
             BufferedWriter outstream = new BufferedWriter(
                     new OutputStreamWriter(socketin.getOutputStream()));

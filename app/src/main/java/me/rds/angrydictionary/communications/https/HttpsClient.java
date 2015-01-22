@@ -1,8 +1,12 @@
 package me.rds.angrydictionary.communications.https;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.cert.Certificate;
@@ -10,7 +14,6 @@ import java.security.cert.Certificate;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLPeerUnverifiedException;
 
-import me.rds.angrydictionary.LocalConsts;
 import me.rds.angrydictionary.communications.https.listeners.OnGetContentListener;
 
 /**
@@ -47,21 +50,38 @@ public class HttpsClient {
         }
     }
 
-    public void start(final OnGetContentListener listener){
+    public void start(final String https, boolean startInMainThread, final OnGetContentListener listener){
         if (listener==null) return;
+         if(startInMainThread)
+             startIt(https, listener);
+        else
         new Thread(new Runnable() {
             @Override
             public void run() {
-                testIt(listener);
+                startIt(https, listener);
             }
         }).start();
     }
 
-    private  void testIt(final OnGetContentListener listener){
+
+    /**
+     * WORK IN CURRENT THREAD!
+     * @param url
+     * @param writer
+     * @throws Exception
+     */
+    public void start(String url, OutputStream writer) throws Exception {
+        HttpsURLConnection con = (HttpsURLConnection) new URL(url).openConnection();
+        getContent(con, writer);
+    }
+
+
+
+
+    private  void startIt(String url, final OnGetContentListener listener){
         try {
-            URL url = new URL(LocalConsts.LINK_DB_LIST);
-            HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
-            print_content(con, listener);
+            HttpsURLConnection con = (HttpsURLConnection)new URL(url).openConnection();
+            getContent(con, listener);
         } catch (MalformedURLException e) {
             listener.onGetContent(null, e);
         } catch (IOException e) {
@@ -69,7 +89,7 @@ public class HttpsClient {
         }
     }
 
-    private void print_content(HttpsURLConnection con, final OnGetContentListener listener) {
+   private void getContent(HttpsURLConnection con, final OnGetContentListener listener) {
         if (con == null) {
             listener.onGetContent(null, new NullPointerException("Https connection is null; "));
             return;
@@ -85,6 +105,18 @@ public class HttpsClient {
         } catch (IOException e) {
             listener.onGetContent(null, e);
         }
+    }
+
+    private void getContent(HttpsURLConnection con, final OutputStream writer) throws IOException {
+        if (con == null||writer==null)
+            throw new NullPointerException("NULL: connection = "  +  con + ", writer =  " + writer);
+            InputStream br = con.getInputStream();
+            byte [] buf= new byte[4096];
+            int size=0;
+            while ((size=br.read(buf)) >0)
+              writer.write(buf, 0, size);
+            br.close();
+
     }
 
 }

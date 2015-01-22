@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/AngryDict.iml" filepath="$PROJECT_DIR$/AngryDict.iml" />
       <module fileurl="file://$PROJECT_DIR$/SecurePreferences/SecurePreferences.iml" filepath="$PROJECT_DIR$/SecurePreferences/SecurePreferences.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dropboxChooserSDK/dropboxChooserSDK.iml" filepath="$PROJECT_DIR$/dropboxChooserSDK/dropboxChooserSDK.iml" />
     </modules>
   </component>
 </project>

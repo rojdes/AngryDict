@@ -91,7 +91,7 @@
             android:background="@drawable/bg_phantom_screen"
             android:layout_gravity="center_horizontal">
 
-            <common.pianters.ResizableView
+            <common.views.ResizableView
                 android:id="@+id/rsw_prefs"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
