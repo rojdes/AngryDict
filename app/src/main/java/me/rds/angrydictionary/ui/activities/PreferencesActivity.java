@@ -18,7 +18,7 @@ import me.rds.angrydictionary.AppConsts;
 import me.rds.angrydictionary.AppIntents;
 import me.rds.angrydictionary.AppPrefs;
 import me.rds.angrydictionary.R;
-import me.rds.angrydictionary.services.UpdateDBService;
+import me.rds.angrydictionary.services.network.UpdateDBService;
 import me.rds.angrydictionary.ui.activities.adapters.DifficultyAdapter;
 import me.rds.angrydictionary.ui.activities.adapters.model.DifficultyLevel;
 

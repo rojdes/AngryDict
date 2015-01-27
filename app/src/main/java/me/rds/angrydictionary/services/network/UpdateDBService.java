@@ -1,4 +1,4 @@
-package me.rds.angrydictionary.services;
+package me.rds.angrydictionary.services.network;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 
 import me.rds.angrydictionary.AppConsts;
@@ -102,7 +101,7 @@ public final class UpdateDBService extends IntentService{
         wrt.flush();
         wrt.close();
         Log.e("UDAPTE_DB", "1");
-        SQLiteDatabase db=SQLiteDatabase.openDatabase(path,null, SQLiteDatabase.OPEN_READWRITE);
+        SQLiteDatabase db=SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READWRITE);
         DaoMaster m=  new DaoMaster(db,1);
         DaoSession s=m.newSession();
         Log.e("UDAPTE_DB", "3");

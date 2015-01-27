@@ -14,8 +14,10 @@ public class VolumeHelper {
 
     private static final int MUSIC_STREAM = AudioManager.STREAM_MUSIC;
     private static int mLastVolume = -1;
+
     private static AtomicInteger mCount = new AtomicInteger(0);
     private static AudioManager mAmManager;
+
     private VolumeHelper() {
     }
 
@@ -39,7 +41,8 @@ public class VolumeHelper {
 
     public static int getMax() {
         initAudioManagerIfNeeded();
-        return mAmManager.getStreamMaxVolume(MUSIC_STREAM);
+        //return mAmManager.getStreamMaxVolume(MUSIC_STREAM);
+        return 2;
     }
 
     private static void initAudioManagerIfNeeded() {

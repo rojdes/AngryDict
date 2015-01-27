@@ -110,32 +110,32 @@ public class DictionaryManager {
 
     public void addNewWords(Word... w) {
         if (ArraysUtils.isEmpty(w)) return;
-        mDaoSession.getWordDao().insertInTx(w);
+        mDaoSession.getWordDao().insertOrReplaceInTx(w);
     }
 
     public void addNewUsages(PhraseUsage ... ph) {
         if (ArraysUtils.isEmpty(ph)) return;
-        mDaoSession.getUsageDao().insertInTx(ph);
+        mDaoSession.getUsageDao().insertOrReplaceInTx(ph);
     }
 
     public void addNewMP3s(MP3Phrase... mp3) {
         if (ArraysUtils.isEmpty(mp3)) return;
-        mDaoSession.getMp3Dao().insertInTx(mp3);
+        mDaoSession.getMp3Dao().insertOrReplaceInTx(mp3);
     }
 
     public void addNewWords(List<Word>  w) {
         if (ListsUtils.isEmpty(w)) return;
-        mDaoSession.getWordDao().insertInTx(w);
+        mDaoSession.getWordDao().insertOrReplaceInTx(w);
     }
 
     public void addNewUsages(List<PhraseUsage>  ph) {
         if (ListsUtils.isEmpty(ph)) return;
-        mDaoSession.getUsageDao().insertInTx(ph);
+        mDaoSession.getUsageDao().insertOrReplaceInTx(ph);
     }
 
     public void addNewMP3s(List<MP3Phrase>  mp3) {
         if (ListsUtils.isEmpty(mp3)) return;
-        mDaoSession.getMp3Dao().insertInTx(mp3 );
+        mDaoSession.getMp3Dao().insertOrReplaceInTx(mp3 );
     }
 
 
@@ -147,6 +147,12 @@ public class DictionaryManager {
     public Word getWord(String word) {
         Query query = mDaoSession.getWordDao().queryBuilder().where(WordDao.Properties.Word.eq(word)).build();
         return (Word) query.list().get(0);
+    }
+
+    public String getMP3For(String word) {
+        Query query = mDaoSession.getMp3Dao().queryBuilder().where(WordDao.Properties.Word.eq(word)).build();
+        List<MP3Phrase> list=query.list();
+        return list.size()>0?list.get(0).mp3:"";
     }
 
 

@@ -1,32 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="wrap_content"
-    android:layout_height="wrap_content" android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView android:id="@+id/wndTvAsk" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp" android:gravity="center"
-        android:textColor="@android:color/white" android:textSize="28dp" />
+    <TextView
+        android:id="@+id/wndTvAsk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:text="TEXT"
+        android:gravity="center"
+        android:padding="5dp"
+        android:background="@drawable/bg_wnd_tv_word"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="28dp" />
 
-    <android.support.v7.widget.GridLayout android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:layout_gravity="center" app:columnCount="2"
-        app:orientation="horizontal">
+    <android.support.v7.widget.GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:rowCount="3"
+        app:columnCount="2"
+        android:layout_below="@+id/wndTvAsk"
+        android:layout_centerHorizontal="true">
 
-        <Button android:id="@+id/wndBtnAsk1" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_margin="10dp"
-            android:gravity="center" android:tag="0" android:text="Ask1" android:textSize="20dp" />
+        <Button
+            android:id="@+id/wndBtnAsk1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:tag="0"
+            android:text="Ask1"
+            android:textSize="20dp"
+            app:layout_row="0"
+            app:layout_column="0" />
 
-        <Button android:id="@+id/wndBtnAsk2" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_margin="10dp" android:gravity="center"
-            android:tag="1" android:text="Ask2" android:textSize="20dp" />
+        <Button
+            android:id="@+id/wndBtnAsk2"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:tag="1"
+            android:text="Ask2"
+            android:textSize="20dp"
+            app:layout_row="0"
+            app:layout_column="1" />
 
-        <Button android:id="@+id/wndBtnAsk3" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_margin="10dp" android:gravity="center"
-            android:tag="2" android:text="Ask3" android:textSize="20dp" />
 
-        <Button android:id="@+id/wndBtnAsk4" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_margin="10dp" android:gravity="center"
-            android:tag="3" android:text="Ask4" android:textSize="20dp" />
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            app:layout_columnSpan="2"
+            app:layout_row="1"
+            app:layout_column="0"
+            android:indeterminateOnly="true"
+            app:layout_gravity="center"
+            android:indeterminateBehavior="cycle"
+            android:indeterminateDrawable="@drawable/ic_progress"
+            />
+
+        <Button
+            android:id="@+id/wndBtnAsk3"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:tag="2"
+            android:text="Ask3"
+            android:textSize="20dp"
+            app:layout_row="2"
+            app:layout_column="0" />
+
+        <Button
+            android:id="@+id/wndBtnAsk4"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:tag="3"
+            android:text="Ask4"
+            android:textSize="20dp"
+            app:layout_row="2"
+            app:layout_column="1" />
     </android.support.v7.widget.GridLayout>
 
-</LinearLayout>
+</RelativeLayout>

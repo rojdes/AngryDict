@@ -35,7 +35,7 @@ import me.rds.angrydictionary.ui.activities.PreferencesActivity;
 @SuppressLint("InflateParams")
 public class ClockService extends Service {
 
-    private static final String TAG = "CLOCK_SERRVICE";
+    private static final String TAG = "CLOCK_SERVICE";
 
 
     private final Intent mTimeIntent = new Intent(AppIntents.Action.TIME);
@@ -60,9 +60,8 @@ public class ClockService extends Service {
     };
 
 
-    private Intent mPlayIntent;
-    protected int[] ids = new int[]{R.id.wndBtnAsk1, R.id.wndBtnAsk2, R.id.wndBtnAsk3, R.id.wndBtnAsk4};
     protected WindowHelper mWindowHelper = new WindowHelper();
+    protected DictionaryWindow mDictionaryWindow;
     protected Handler mDelayHandler = new Handler();
 
     @Override
@@ -74,7 +73,8 @@ public class ClockService extends Service {
     public void onCreate() {
         super.onCreate();
         mDelayHandler.postDelayed(mUpdateTimeTask, AppPrefs.getPeriodShow(ClockService.this)*60*1000L);
-        mPlayIntent = new Intent(ClockService.this, MediaIntentService.class);
+        if (mDictionaryWindow==null)
+            mDictionaryWindow= new DictionaryWindow(this, mWindowHelper);
         this.sendBroadcast(mTimeIntent);
         this.registerReceiver(mTimeTickReciver, new IntentFilter(Intent.ACTION_TIME_TICK));
     }
@@ -98,43 +98,15 @@ public class ClockService extends Service {
     }
 
     private void onClickWidgetAmPmAction() {
-        if (mWindowHelper == null)
+        if (mWindowHelper == null) {
             mWindowHelper = new WindowHelper();
+            mDictionaryWindow=new DictionaryWindow(this, mWindowHelper);
+        }
         if (mWindowHelper.getLastView() == null) {
-            buildWindow();
+           mDictionaryWindow.build();
         } else {
             mWindowHelper.remove(ClockService.this);
         }
-    }
-
-    private void buildWindow() {
-        final TrueWord w = DictionaryManager.getInstance(ClockService.this).getWord(Language.ENG);
-        View view = ((LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.wnd_lang_ask, null, false);
-        ((Button) view.findViewById(R.id.wndBtnAsk1)).setText(w.translates[0]);
-        ((Button) view.findViewById(R.id.wndBtnAsk2)).setText(w.translates[1]);
-        ((Button) view.findViewById(R.id.wndBtnAsk3)).setText(w.translates[2]);
-        ((Button) view.findViewById(R.id.wndBtnAsk4)).setText(w.translates[3]);
-        ((TextView) view.findViewById(R.id.wndTvAsk)).setText("WORD IS:     \"" + w.word + "\"");
-        WindowHelper.Builder b = new WindowHelper.Builder(ClockService.this, mWindowHelper, view).setListeners(new OnClickListener() {
-
-            @Override
-            public void onClick(Object tag) {
-                if (Integer.valueOf((String) tag) == w.trueWordNumber) {
-                    mWindowHelper.remove(ClockService.this);
-                    mPlayIntent.setAction(AppIntents.Action.PLAY_WORD);
-                    mPlayIntent.putExtra(AppIntents.Extra.PLAY_WORD, "offer.mp3");
-                } else {
-                    Log.e("CLOCK_SERVICE", "ELSE");
-                    mPlayIntent.setAction(AppIntents.Action.PLAY_ERROR);
-                }
-                ClockService.this.startService(mPlayIntent);
-            }
-        }, ids);
-        ScreenSizePx px = ScreenHelper.getSize(ClockService.this);
-        b.setWindowParams(px.getWidth(), px.getHeight() / 2);
-        b.setFormat(PixelFormat.TRANSPARENT);
-        b.setWindowPos(0, 0);
-        b.setGravity(Gravity.CENTER).build();
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -157,21 +129,10 @@ public class ClockService extends Service {
         Log.e(TAG, "onDestroy");
         mDelayHandler.removeCallbacks(mUpdateTimeTask);
         unregisterReceiver(mTimeTickReciver);
+        mWindowHelper.remove(this);
+        mDictionaryWindow=null;
     }
 
     ;
-
-    private void updateClockWidget() {
-        Log.e(TAG, "updateClockWidget");
-        Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        this.sendBroadcast(intent);
-
-    }
-
-
-
-
-
-
 
 }
