@@ -7,8 +7,11 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Random;
 
+import common.utils.ArraysUtils;
+import common.utils.ListsUtils;
 import de.greenrobot.dao.query.Query;
 import me.rds.angrydictionary.AppConsts;
 import me.rds.angrydictionary.communications.https.HttpsClient;
@@ -17,8 +20,10 @@ import me.rds.angrydictionary.dictionary.db.generators.DaoMaster;
 import me.rds.angrydictionary.dictionary.db.generators.DaoSession;
 import me.rds.angrydictionary.dictionary.db.model.WordDao;
 import me.rds.angrydictionary.dictionary.listeners.DictionaryActionsCallBack;
+import me.rds.angrydictionary.dictionary.model.MP3Phrase;
 import me.rds.angrydictionary.dictionary.model.DBFileInfo;
 import me.rds.angrydictionary.dictionary.model.Language;
+import me.rds.angrydictionary.dictionary.model.PhraseUsage;
 import me.rds.angrydictionary.dictionary.model.TrueWord;
 import me.rds.angrydictionary.dictionary.model.Word;
 
@@ -60,8 +65,12 @@ public class DictionaryManager {
     }
 
     public static DictionaryManager getInstance(Context context) {
-        if (mInstance == null)
-            mInstance = new DictionaryManager(context);
+        if (mInstance == null){
+            synchronized (DictionaryManager.class){
+                if (mInstance == null)
+                    mInstance = new DictionaryManager(context);
+            }
+        }
         return mInstance;
     }
 
@@ -87,6 +96,7 @@ public class DictionaryManager {
         });
     }
 
+
 //    public void updateDBFromServerUsingBroadcast(){
 //        Intent intent= new Intent(AppIntents.Action.LOAD);
 //        intent.putExtra(AppIntents.Extra.LINK,ApplConsts.LINK_DB_LIST);
@@ -96,6 +106,38 @@ public class DictionaryManager {
     public void addWord(Word w) {
         mDaoSession.getWordDao().insertOrReplace(w);
     }
+
+
+    public void addNewWords(Word... w) {
+        if (ArraysUtils.isEmpty(w)) return;
+        mDaoSession.getWordDao().insertInTx(w);
+    }
+
+    public void addNewUsages(PhraseUsage ... ph) {
+        if (ArraysUtils.isEmpty(ph)) return;
+        mDaoSession.getUsageDao().insertInTx(ph);
+    }
+
+    public void addNewMP3s(MP3Phrase... mp3) {
+        if (ArraysUtils.isEmpty(mp3)) return;
+        mDaoSession.getMp3Dao().insertInTx(mp3);
+    }
+
+    public void addNewWords(List<Word>  w) {
+        if (ListsUtils.isEmpty(w)) return;
+        mDaoSession.getWordDao().insertInTx(w);
+    }
+
+    public void addNewUsages(List<PhraseUsage>  ph) {
+        if (ListsUtils.isEmpty(ph)) return;
+        mDaoSession.getUsageDao().insertInTx(ph);
+    }
+
+    public void addNewMP3s(List<MP3Phrase>  mp3) {
+        if (ListsUtils.isEmpty(mp3)) return;
+        mDaoSession.getMp3Dao().insertInTx(mp3 );
+    }
+
 
     public Word getWord(int id) {
         Query query = mDaoSession.getWordDao().queryBuilder().where(WordDao.Properties.Id.eq(id)).build();

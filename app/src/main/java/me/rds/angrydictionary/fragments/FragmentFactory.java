@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import me.rds.angrydictionary.R;
-import me.rds.angrydictionary.dictionary.DictionaryManager;
+import me.rds.angrydictionary.dictionary.managers.DictionaryManager;
 import me.rds.angrydictionary.dictionary.model.Language;
 import me.rds.angrydictionary.dictionary.model.Word;
 

@@ -30,7 +30,7 @@ public class WordDao extends AbstractDao<Word, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists ? "IF NOT EXISTS " : "";
         db.execSQL("CREATE TABLE " + constraint + " '" + TABLENAME + "' (" +
-                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," +
+                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," +
                 "'word_type' TEXT, " +
                 "'primary_lang' TEXT, " +
                 "'secondary_lang' TEXT, " +

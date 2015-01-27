@@ -1,7 +1,6 @@
 package me.rds.angrydictionary.ui.activities;
 
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -19,10 +18,7 @@ import me.rds.angrydictionary.AppConsts;
 import me.rds.angrydictionary.AppIntents;
 import me.rds.angrydictionary.AppPrefs;
 import me.rds.angrydictionary.R;
-import me.rds.angrydictionary.dictionary.listeners.DictionaryActionsCallBack;
-import me.rds.angrydictionary.dictionary.managers.DictionaryManager;
-import me.rds.angrydictionary.dictionary.model.DBFileInfo;
-import me.rds.angrydictionary.services.CommunicationService;
+import me.rds.angrydictionary.services.UpdateDBService;
 import me.rds.angrydictionary.ui.activities.adapters.DifficultyAdapter;
 import me.rds.angrydictionary.ui.activities.adapters.model.DifficultyLevel;
 
@@ -133,9 +129,8 @@ public class PreferencesActivity extends ActionBarActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        Intent intent= new Intent(this, CommunicationService.class);
-        intent.setAction(AppIntents.Action.LOAD);
-        intent.putExtra(AppIntents.Extra.UPDATE_DICT,"");
+        Intent intent= new Intent(this, UpdateDBService.class);
+        intent.setAction(AppIntents.Action.UPDATE_DICT);
         startService(intent);
     }
 

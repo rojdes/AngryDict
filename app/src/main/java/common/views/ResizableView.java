@@ -1,13 +1,13 @@
-package common.pianters;
+package common.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import common.views.LockableScrollView;
 import me.rds.angrydictionary.R;
 
 /**
@@ -44,11 +44,6 @@ public final class ResizableView extends View implements View.OnTouchListener {
         getSize();
     }
 
-
-    private void getSize(){
-        this.setOnTouchListener(this);
-    }
-
     public void setScrollViewContainer(LockableScrollView view){
         mScrollViewContainer=view;
     }
@@ -56,6 +51,11 @@ public final class ResizableView extends View implements View.OnTouchListener {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+    }
+
+
+    private void getSize(){
+        this.setOnTouchListener(this);
     }
 
 

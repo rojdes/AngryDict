@@ -22,6 +22,8 @@ public class ScreenHelper {
             return getPortraitDensity(context);
     }
 
+
+
     private static ScreenSizeDPI getPortraitDensity(Context context) {
         if (mPortraitDensity == null) {
             ScreenSizePx s = getPortraitSize(context);

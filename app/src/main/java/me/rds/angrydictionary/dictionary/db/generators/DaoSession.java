@@ -11,7 +11,7 @@ import de.greenrobot.dao.internal.DaoConfig;
 import me.rds.angrydictionary.dictionary.db.model.MP3Dao;
 import me.rds.angrydictionary.dictionary.db.model.UsageDao;
 import me.rds.angrydictionary.dictionary.db.model.WordDao;
-import me.rds.angrydictionary.dictionary.model.AudioPhrase;
+import me.rds.angrydictionary.dictionary.model.MP3Phrase;
 import me.rds.angrydictionary.dictionary.model.PhraseUsage;
 import me.rds.angrydictionary.dictionary.model.Word;
 
@@ -52,7 +52,7 @@ The (generated) DaoSession class is one of the central interface to greenDAO.
         usageDao = new UsageDao(usageDaoConfig, this);
 
         registerDao(Word.class, wordDao);
-        registerDao(AudioPhrase.class, mp3Dao);
+        registerDao(MP3Phrase.class, mp3Dao);
         registerDao(PhraseUsage.class, usageDao);
     }
 

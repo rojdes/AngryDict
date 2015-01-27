@@ -30,6 +30,11 @@ public class DaoMaster extends AbstractDaoMaster {
 
     private static final int DB_VERSION = 2;
 
+    public DaoMaster(SQLiteDatabase db){
+        super(db,1);
+    }
+
+
     public DaoMaster(SQLiteDatabase db, int dbVersion) {
         super(db, dbVersion);
         registerDaoClass(WordDao.class);

@@ -23,7 +23,7 @@ public class UsageDao extends AbstractDao<PhraseUsage, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists ? "IF NOT EXISTS " : "";
         db.execSQL("CREATE TABLE " + constraint + " '" + TABLENAME + "' (" +
-                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "'word' TEXT, " +
                 "'verb_forms' TEXT, " +
                 "'example' TEXT, " +

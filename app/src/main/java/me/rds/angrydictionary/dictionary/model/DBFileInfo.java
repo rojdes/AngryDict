@@ -14,6 +14,9 @@ public class DBFileInfo {
 
     public String url;
 
+    @SerializedName("mp3_list")
+    public String mp3List;
+
     public static class Array{
 
         @SerializedName("db")

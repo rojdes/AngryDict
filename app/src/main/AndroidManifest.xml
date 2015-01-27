@@ -48,9 +48,12 @@
 
         <service android:name=".widget.ClockService" />
         <service android:name=".services.media.MediaIntentService" />
-        <service android:name=".services.CommunicationService" />
+        <service android:name=".services.UpdateDBService" />
 
         <meta-data android:name="db_version" android:value="4" />
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="318fabda38986f1660e1e2932d4bf49d4e07f222" />
     </application>
 
 </manifest>
