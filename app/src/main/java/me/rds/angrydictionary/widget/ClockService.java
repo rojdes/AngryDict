@@ -3,33 +3,18 @@ package me.rds.angrydictionary.widget;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Service;
-import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
-import common.ScreenHelper;
-import common.ScreenHelper.ScreenSizePx;
 import common.WindowHelper;
-import common.WindowHelper.OnClickListener;
 import me.rds.angrydictionary.AppIntents;
 import me.rds.angrydictionary.AppPrefs;
-import me.rds.angrydictionary.R;
-import me.rds.angrydictionary.dictionary.managers.DictionaryManager;
-import me.rds.angrydictionary.dictionary.model.Language;
-import me.rds.angrydictionary.dictionary.model.TrueWord;
-import me.rds.angrydictionary.services.media.MediaIntentService;
 import me.rds.angrydictionary.ui.activities.PreferencesActivity;
 
 @SuppressLint("InflateParams")
@@ -53,8 +38,7 @@ public class ClockService extends Service {
     private Runnable mUpdateTimeTask = new Runnable()
     {   public void run()
         {
-            //Log.e(TAG, "=== GO-GO-SCREEN ===" + AppPrefs.getPeriodShow(ClockService.this)*60*1000L);
-            //add here show window;
+            activateDictWindow();
             mDelayHandler.postDelayed(this, AppPrefs.getPeriodShow(ClockService.this)*60*1000L);
         }
     };
@@ -83,9 +67,8 @@ public class ClockService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent == null || intent.getAction() == null)
             return Service.START_STICKY;
-       // Log.e(TAG, "intent = " + intent.getAction());
         if (intent.getAction().equals(AppIntents.Action.WIDGET_CLICK_AM_PM))
-            onClickWidgetAmPmAction();
+            activateDictWindow();
         if (intent.getAction().equals(AppIntents.Action.WIDGET_CLICK_PREFS))
             onClickWidgetPrefsAction();
         return Service.START_STICKY;
@@ -97,7 +80,7 @@ public class ClockService extends Service {
         this.startActivity(intent);
     }
 
-    private void onClickWidgetAmPmAction() {
+    private void activateDictWindow() {
         if (mWindowHelper == null) {
             mWindowHelper = new WindowHelper();
             mDictionaryWindow=new DictionaryWindow(this, mWindowHelper);

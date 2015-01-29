@@ -87,7 +87,7 @@ public class BinaryClockWidget extends AppWidgetProvider {
     }
 
     private void initViewsifNeeded(Context context, RemoteViews views) {
-        clickAmPm(context, views);
+        //clickAmPm(context, views);
         clickPrefs(context, views);
     }
 
@@ -98,13 +98,13 @@ public class BinaryClockWidget extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.iv_prefs, pIntent);
     }
 
-    private void clickAmPm(Context context, RemoteViews views) {
-        Intent intent = new Intent(context, ClockService.class);
-        intent.setAction(AppIntents.Action.WIDGET_CLICK_AM_PM);
-        PendingIntent pIntent = PendingIntent.getService(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.iv_am, pIntent);
-        views.setOnClickPendingIntent(R.id.iv_pm, pIntent);
-    }
+//    private void clickAmPm(Context context, RemoteViews views) {
+//        Intent intent = new Intent(context, ClockService.class);
+//        intent.setAction(AppIntents.Action.WIDGET_CLICK_AM_PM);
+//        PendingIntent pIntent = PendingIntent.getService(context, 0, intent, 0);
+//        views.setOnClickPendingIntent(R.id.iv_am, pIntent);
+//        views.setOnClickPendingIntent(R.id.iv_pm, pIntent);
+//    }
 
     // @Override
     // public void onRestored(Context context, int[] oldWidgetIds, int[]
