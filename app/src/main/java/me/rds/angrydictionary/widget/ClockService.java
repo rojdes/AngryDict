@@ -87,9 +87,9 @@ public class ClockService extends Service {
         }
         if (mWindowHelper.getLastView() == null) {
            mDictionaryWindow.build();
-        } else {
+        } /*else {
             mWindowHelper.remove(ClockService.this);
-        }
+        }*/
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)

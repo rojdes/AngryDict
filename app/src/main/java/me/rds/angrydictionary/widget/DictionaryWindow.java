@@ -85,9 +85,10 @@ public class DictionaryWindow {
 
     private void doOnClick(Object tag, TrueWord w, final View view){
         boolean res=Integer.valueOf((String) tag) == w.trueWordNumber;
-        if (!res){
+        if (!res)
            startCountDown(view);
-        }
+         else
+            releaseWindow();
         mContext.startService(res?onSelectTrueWord(w):onSelectFalseWord());
     }
 
@@ -145,7 +146,6 @@ public class DictionaryWindow {
 
     private Intent onSelectTrueWord(Word w){
         Log.e(TAG, "onSelectTrueWord");
-        releaseWindow();
         mPlayIntent.setAction(AppIntents.Action.PLAY_WORD);
         mPlayIntent.putExtra(AppIntents.Extra.PLAY_WORD, DictionaryManager.getInstance(mContext).getMP3For(w.word));
         return mPlayIntent;
