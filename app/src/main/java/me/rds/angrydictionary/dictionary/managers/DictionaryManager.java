@@ -76,48 +76,6 @@ public class DictionaryManager {
     }
 
 
-
-    @Deprecated
-    /**
-     *
-     * @param callBack return in callback on OK DBServerFile.Array as second param, Exception object on ERROR
-     */
-    public void updateDBFromServer(final DictionaryActionsCallBack callBack){
-        new HttpsClient().start(AppConsts.LINK_DB_LIST, true, new OnGetContentListener() {
-
-            @Override
-            public void onGetContent(String msg, Exception error) {
-                if (msg == null)
-                    callBack.callback(DictionaryActionsCallBack.ERROR, error);
-                else {
-                    DBFileInfo.Array array = new Gson().fromJson(msg, DBFileInfo.Array.class);
-                    callBack.callback(DictionaryActionsCallBack.OK, array);
-                }
-            }
-        });
-    }
-
-
-//    public void updateDBFromServerUsingBroadcast(){
-//        Intent intent= new Intent(AppIntents.Action.LOAD);
-//        intent.putExtra(AppIntents.Extra.LINK,ApplConsts.LINK_DB_LIST);
-//
-//    }
-
-//    public void addWord(Word w) {
-//        mDaoSession.getWordDao().insertOrReplace(w);
-//        mEngList.clear();
-//        mEngList=null;
-//    }
-
-
-//    public void addNewWords(Word... w) {
-//        if (ArraysUtils.isEmpty(w)) return;
-//        mDaoSession.getWordDao().insertOrReplaceInTx(w);
-//        mEngList.clear();
-//        mEngList=null;
-//    }
-
     public void addNewUsages(PhraseUsage ... ph) {
         if (ArraysUtils.isEmpty(ph)) return;
         mDaoSession.getUsageDao().insertOrReplaceInTx(ph);
@@ -125,6 +83,7 @@ public class DictionaryManager {
 
     public void addNewMP3s(MP3Phrase... mp3) {
         if (ArraysUtils.isEmpty(mp3)) return;
+        updateListIfNeeded();
         mDaoSession.getMp3Dao().insertOrReplaceInTx(mp3);
     }
 

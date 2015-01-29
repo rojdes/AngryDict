@@ -57,6 +57,7 @@ public final class UpdateDBService extends IntentService{
      */
     @Override
     protected void onHandleIntent(Intent intent) {
+       Log.e(TAG, "HANDLE INTENT");
        if (intent==null||intent.getAction()==null||!intent.getAction().equals(AppIntents.Action.UPDATE_DICT)) return;
            updateDictionary();
     }

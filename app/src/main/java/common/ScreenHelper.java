@@ -12,7 +12,6 @@ public class ScreenHelper {
     private static ScreenSizePx mPortraitSize;
     private static ScreenSizePx mLandscapeSize;
 
-    private static float mPxInDpi;
 
 
     public static ScreenSizeDPI getScreenDensity(Context context) {
@@ -70,8 +69,10 @@ public class ScreenHelper {
         return mLandscapeSize;
     }
 
-    public static float getPxInDpi(Context context) {
-        return mPxInDpi;
+    public static float getPxInDpi(Context context,  boolean isWidth) {
+        ScreenSizePx px=getSize(context);
+        ScreenSizeDPI dp=getScreenDensity(context);
+        return isWidth?(px.getWidth()/dp.getWidth()):(px.getHeight()/dp.getHeight());
     }
 
     public static class ScreenSizeDPI {

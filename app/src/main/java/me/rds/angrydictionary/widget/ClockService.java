@@ -53,7 +53,7 @@ public class ClockService extends Service {
     private Runnable mUpdateTimeTask = new Runnable()
     {   public void run()
         {
-            Log.e(TAG, "=== GO-GO-SCREEN ===" + AppPrefs.getPeriodShow(ClockService.this)*60*1000L);
+            //Log.e(TAG, "=== GO-GO-SCREEN ===" + AppPrefs.getPeriodShow(ClockService.this)*60*1000L);
             //add here show window;
             mDelayHandler.postDelayed(this, AppPrefs.getPeriodShow(ClockService.this)*60*1000L);
         }
@@ -83,7 +83,7 @@ public class ClockService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent == null || intent.getAction() == null)
             return Service.START_STICKY;
-        Log.e(TAG, "intent = " + intent.getAction());
+       // Log.e(TAG, "intent = " + intent.getAction());
         if (intent.getAction().equals(AppIntents.Action.WIDGET_CLICK_AM_PM))
             onClickWidgetAmPmAction();
         if (intent.getAction().equals(AppIntents.Action.WIDGET_CLICK_PREFS))

@@ -57,7 +57,7 @@ public class WindowHelper {
         private int mFlags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         private int mFormat = PixelFormat.TRANSLUCENT;
         private int mGravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
-        private int pX = 0, pY = 100;
+        private int pX = 0, pY = 0;
         private Context mContext;
         private OnClickListener mOnClickListener;
         private int mTag = -1;

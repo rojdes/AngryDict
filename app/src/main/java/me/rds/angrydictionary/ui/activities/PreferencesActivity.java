@@ -130,7 +130,7 @@ public class PreferencesActivity extends ActionBarActivity {
         mtvPeriodShow.setText(String.valueOf(AppPrefs.getPeriodShow(this)));
         mtvAnswerClick.setText(String.valueOf(AppPrefs.getTimeAnswer(this)));
         mtvTransparency.setText(String.valueOf(AppPrefs.getTransparency(this)));
-        ListsUtils.printAll(TAG,DictionaryManager.getInstance(this).getAvailableList());
+  //      ListsUtils.printAll(TAG,DictionaryManager.getInstance(this).getAvailableList());
     }
 
     @Override

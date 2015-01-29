@@ -46,7 +46,7 @@ public class BinaryClockWidget extends AppWidgetProvider {
     // http://habrahabr.ru/post/114515/
     @Override
     public void onUpdate(Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
-        Log.e(TAG, "ON UPDATE");
+       // Log.e(TAG, "ON UPDATE");
 //        TimeUpdater.updateTime(views);
         initViewsifNeeded(context, new RemoteViews(context.getPackageName(), R.layout.wdg_binary_clock));
 //        appWidgetManager.updateAppWidget(appWidgetIds, views);
@@ -61,8 +61,7 @@ public class BinaryClockWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        //super.onReceive(context, intent);
-        Log.e(TAG, "ON RECEIVE ");
+        //Log.e(TAG, "ON RECEIVE ");
         if (intent == null || intent.getAction() == null) return;
         if (intent.getAction().equals(AppIntents.Action.TIME) || intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             ComponentName thisAppWidget = new ComponentName(context.getPackageName(), getClass().getName());
@@ -88,7 +87,6 @@ public class BinaryClockWidget extends AppWidgetProvider {
     }
 
     private void initViewsifNeeded(Context context, RemoteViews views) {
-        Log.e(TAG, "REGISTER CLICK");
         clickAmPm(context, views);
         clickPrefs(context, views);
     }

@@ -18,6 +18,10 @@
 
     <dimen name="prefs_top_icon_iv_size">80dp</dimen>
     <dimen name="prefs_top_icon_iv_margin">10dp</dimen>
+    <dimen name="wnd_btn_width">110dp</dimen>
+    <dimen name="wnd_title_width">220dp</dimen>
+    <dimen name="wnd_btn_margin">5dp</dimen>
+    <dimen name="wnd_progress_size">50dp</dimen>
 
 
 </resources>

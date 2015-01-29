@@ -12,6 +12,10 @@ public interface AppConsts {
 
     public static int MAX_TIME_ANSWER = 5;
 
+    public static int MIN_WINDOW_WIDTHdp=200;
+
+    public static int MIN_WINDOW_HEIGHTdp=220;
+
     public static String SERVER_IP = "192.168.0.105";
 
     public static int SERVER_PORT = 20000;

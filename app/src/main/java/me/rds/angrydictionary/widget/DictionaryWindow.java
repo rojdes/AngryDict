@@ -8,10 +8,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import common.ScreenHelper;
 import common.WindowHelper;
+import me.grantland.widget.AutofitHelper;
+import me.rds.angrydictionary.AppConsts;
 import me.rds.angrydictionary.AppIntents;
 import me.rds.angrydictionary.R;
 import me.rds.angrydictionary.dictionary.managers.DictionaryManager;
@@ -26,11 +29,15 @@ import me.rds.angrydictionary.services.media.MediaIntentService;
 public class DictionaryWindow {
 
     private static final String TAG="DICTIONARY_WINDOW";
-
+    private static final int ID_PROGRESS =R.id.wndPb ;
+    protected static final int[] IDS_BUTTONS = new int[]{R.id.wndBtnAsk1, R.id.wndBtnAsk2, R.id.wndBtnAsk3, R.id.wndBtnAsk4};
     private Context mContext;
     protected WindowHelper mWindowHelper;
     protected final Intent mPlayIntent;
-    protected int[] ids = new int[]{R.id.wndBtnAsk1, R.id.wndBtnAsk2, R.id.wndBtnAsk3, R.id.wndBtnAsk4};
+
+    private ProgressBar mpbProgress;
+
+
 
 
     /** THis class not control releasing window in helper
@@ -38,10 +45,10 @@ public class DictionaryWindow {
      * @param context
      * @param windowHelper
      */
-    public DictionaryWindow(Context context,  WindowHelper windowHelper){
-      mContext=context;
-      mWindowHelper=windowHelper;
-      mPlayIntent = new Intent(mContext, MediaIntentService.class);
+    public DictionaryWindow(Context context, WindowHelper windowHelper) {
+        mContext = context;
+        mWindowHelper = windowHelper;
+        mPlayIntent = new Intent(mContext, MediaIntentService.class);
     }
 
     public void build(){
@@ -49,39 +56,65 @@ public class DictionaryWindow {
     }
 
     private void buildWindow(final TrueWord w) {
-
-        View view = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.wnd_lang_ask, null, false);
+        final View view = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.wnd_lang_ask, null, false);
         initSubViews(view,w);
-        WindowHelper.Builder b = new WindowHelper.Builder(mContext, mWindowHelper, view).setListeners(new WindowHelper.OnClickListener() {
+        new WindowHelper.Builder(mContext, mWindowHelper, view).setListeners(new WindowHelper.OnClickListener() {
 
             @Override
             public void onClick(Object tag) {
-                mContext.startService((Integer.valueOf((String) tag) == w.trueWordNumber)?onSelectTrueWord(w):onSelectFalseWord());
+                doOnClick(tag,w,view);
             }
-        }, ids);
-        ScreenHelper.ScreenSizePx px = ScreenHelper.getSize(mContext);
-        b.setWindowParams(px.getWidth(), px.getHeight() / 2);
-        b.setFormat(PixelFormat.TRANSPARENT);
-        b.setWindowPos(0, 0);
-        b.setGravity(Gravity.CENTER).build();
+        }, IDS_BUTTONS)
+                .setWindowParams(ScreenHelper.getPxInDpi(mContext, true)* AppConsts.MIN_WINDOW_WIDTHdp+1, ScreenHelper.getPxInDpi(mContext,false)*AppConsts.MIN_WINDOW_HEIGHTdp+1)
+                .setFormat(PixelFormat.TRANSPARENT)
+                .setGravity(Gravity.CENTER)
+                .build();
     }
+
+
+    private void doOnClick(Object tag, TrueWord w, final View view){
+        boolean res=Integer.valueOf((String) tag) == w.trueWordNumber;
+
+        mContext.startService(res?onSelectTrueWord(w):onSelectFalseWord());
+    }
+
 
     private void initSubViews(View view, Word w) {
         initButtons(view,w);
-        ((TextView) view.findViewById(R.id.wndTvAsk)).setText("WORD IS:     \"" + w.word + "\"");
+        initTitle(view,w);
+        initProgress(view);
 
     }
 
+    private void initProgress(View view) {
+        mpbProgress =(ProgressBar)view.findViewById(ID_PROGRESS);
+        mpbProgress.setVisibility(View.GONE);
+    }
+
+    private void initTitle(View view, Word w){
+        TextView vv=(TextView) view.findViewById(R.id.wndTvAsk);
+        vv.setText("WORD IS: \"" + w.word + "\"");
+        AutofitHelper.create(vv);
+    }
+
     private void initButtons(View rootView, Word w){
-        ((Button) rootView.findViewById(R.id.wndBtnAsk1)).setText(w.translates[0]);
-        ((Button) rootView.findViewById(R.id.wndBtnAsk2)).setText(w.translates[1]);
-        ((Button) rootView.findViewById(R.id.wndBtnAsk3)).setText(w.translates[2]);
-        ((Button) rootView.findViewById(R.id.wndBtnAsk4)).setText(w.translates[3]);
+        Button b0=(Button) rootView.findViewById(R.id.wndBtnAsk1);
+        Button b1=(Button) rootView.findViewById(R.id.wndBtnAsk2);
+        Button b2=(Button) rootView.findViewById(R.id.wndBtnAsk3);
+        Button b3=(Button) rootView.findViewById(R.id.wndBtnAsk4);
+        AutofitHelper.create(b0);
+        AutofitHelper.create(b1);
+        AutofitHelper.create(b2);
+        AutofitHelper.create(b3);
+        b0.setText(w.translates[0]);
+        b1.setText(w.translates[1]);
+        b2.setText(w.translates[2]);
+        b3.setText(w.translates[3]);
     }
 
     private Intent onSelectTrueWord(Word w){
         Log.e(TAG, "onSelectTrueWord");
-        mWindowHelper.remove(mContext);
+        releaseWindow();
         mPlayIntent.setAction(AppIntents.Action.PLAY_WORD);
         mPlayIntent.putExtra(AppIntents.Extra.PLAY_WORD, DictionaryManager.getInstance(mContext).getMP3For(w.word));
         return mPlayIntent;
@@ -91,5 +124,10 @@ public class DictionaryWindow {
         Log.e(TAG, "onSelectFalseWord");
         mPlayIntent.setAction(AppIntents.Action.PLAY_ERROR);
         return mPlayIntent;
+    }
+
+    private void releaseWindow(){
+        mWindowHelper.remove(mContext);
+        mpbProgress=null;
     }
 }
