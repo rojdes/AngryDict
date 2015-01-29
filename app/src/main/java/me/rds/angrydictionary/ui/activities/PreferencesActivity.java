@@ -11,13 +11,19 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.Collections;
+import java.util.List;
+
 import common.ScreenHelper;
+import common.utils.ListsUtils;
 import common.views.ResizableView;
 import common.views.LockableScrollView;
 import me.rds.angrydictionary.AppConsts;
 import me.rds.angrydictionary.AppIntents;
 import me.rds.angrydictionary.AppPrefs;
 import me.rds.angrydictionary.R;
+import me.rds.angrydictionary.dictionary.managers.DictionaryManager;
+import me.rds.angrydictionary.dictionary.model.Word;
 import me.rds.angrydictionary.services.network.UpdateDBService;
 import me.rds.angrydictionary.ui.activities.adapters.DifficultyAdapter;
 import me.rds.angrydictionary.ui.activities.adapters.model.DifficultyLevel;
@@ -124,6 +130,7 @@ public class PreferencesActivity extends ActionBarActivity {
         mtvPeriodShow.setText(String.valueOf(AppPrefs.getPeriodShow(this)));
         mtvAnswerClick.setText(String.valueOf(AppPrefs.getTimeAnswer(this)));
         mtvTransparency.setText(String.valueOf(AppPrefs.getTransparency(this)));
+        ListsUtils.printAll(TAG,DictionaryManager.getInstance(this).getAvailableList());
     }
 
     @Override
@@ -132,7 +139,7 @@ public class PreferencesActivity extends ActionBarActivity {
         Intent intent= new Intent(this, UpdateDBService.class);
         intent.setAction(AppIntents.Action.UPDATE_DICT);
         startService(intent);
-    }
+   }
 
     private void buildScreenPhantom(){
        Log.e(TAG, "measured = " + mrltScreenPhantom.getMeasuredWidth() + ", real = " + mrltScreenPhantom.getWidth());

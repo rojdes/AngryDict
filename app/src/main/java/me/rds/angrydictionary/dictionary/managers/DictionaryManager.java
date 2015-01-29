@@ -6,6 +6,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
@@ -35,22 +37,21 @@ public class DictionaryManager {
     private static final String TAG = "DICT_MANAGER";
     private static final String DB_NAME = "dictionary";
     private static ArrayList<Word> mEngList = new ArrayList<Word>();
-    static {
-        mEngList.add(new Word(Language.ENG, Language.UKR, "introduce", new String[]{"включати", "вводити", "знайомити", "представляти"}));
-        mEngList.add(new Word(Language.ENG, Language.UKR, "estimate", new String[]{"оцінка", "кошторис", "зацінювати", "облікувати"}));
-        mEngList.add(new Word(Language.ENG, Language.UKR, "affair", new String[]{"справа", "діло", "пригода", "роман", "сутичка"}));
-        mEngList.add(new Word(Language.ENG, Language.UKR, "development", new String[]{"розвиток", "еволюція", "зростання", "результат", "виклад"}));
-        mEngList.add(new Word(Language.ENG, Language.UKR, "identity", new String[]{"особистість", "ідентичність", "індивідуальність", "справжність", "тотожність"}));
-        Word w = new Word(Language.ENG, Language.UKR, "offer", new String[]{"пропонувати", "траплятись", "попозиція", "пробувати", "висувати"});
-        mEngList.add(w);
 
-        //convincing  ������������
-        //responsive
-        //mention
-        //collision
-        //option
-        //experience
-    }
+    private static ArrayList<String> mWords = new ArrayList<>();
+
+
+
+
+//    static {
+//
+//        //convincing  ������������
+//        //responsive
+//        //mention
+//        //collision
+//        //option
+//        //experience
+//    }
     private static DictionaryManager mInstance;
 
     private DaoMaster mDaoMaster;
@@ -103,15 +104,19 @@ public class DictionaryManager {
 //
 //    }
 
-    public void addWord(Word w) {
-        mDaoSession.getWordDao().insertOrReplace(w);
-    }
+//    public void addWord(Word w) {
+//        mDaoSession.getWordDao().insertOrReplace(w);
+//        mEngList.clear();
+//        mEngList=null;
+//    }
 
 
-    public void addNewWords(Word... w) {
-        if (ArraysUtils.isEmpty(w)) return;
-        mDaoSession.getWordDao().insertOrReplaceInTx(w);
-    }
+//    public void addNewWords(Word... w) {
+//        if (ArraysUtils.isEmpty(w)) return;
+//        mDaoSession.getWordDao().insertOrReplaceInTx(w);
+//        mEngList.clear();
+//        mEngList=null;
+//    }
 
     public void addNewUsages(PhraseUsage ... ph) {
         if (ArraysUtils.isEmpty(ph)) return;
@@ -125,7 +130,21 @@ public class DictionaryManager {
 
     public void addNewWords(List<Word>  w) {
         if (ListsUtils.isEmpty(w)) return;
+        updateListIfNeeded();
+        for (int i=0;i<w.size(); i++)
+            if (!mWords.contains(w.get(i).word))
+               addUniqueWord(w.get(i));
+    }
+
+    private void addUniqueWord(Word w){
+        mEngList.add(w);
+        mWords.add(w.word);
         mDaoSession.getWordDao().insertOrReplaceInTx(w);
+    }
+
+    public List<Word> getAvailableList(){
+        updateListIfNeeded();
+        return mEngList;
     }
 
     public void addNewUsages(List<PhraseUsage>  ph) {
@@ -166,6 +185,7 @@ public class DictionaryManager {
     }
 
     private TrueWord getRandomEngWord() {
+        updateListIfNeeded();
         TrueWord word = new TrueWord();
         Integer[] chain = getRandomChain(mEngList.size(), INT);
         word.trueWordNumber = new Random().nextInt(INT);
@@ -183,6 +203,22 @@ public class DictionaryManager {
         return word;
     }
 
+
+    private void clearList(){
+        mEngList.clear();
+        mEngList=null;
+        mWords.clear();
+        mWords=null;
+    }
+
+    private void updateListIfNeeded() {
+        if(!ListsUtils.isEmpty(mEngList)&&!ListsUtils.isEmpty(mWords)) return;
+        mEngList=new ArrayList<Word>(mDaoSession.getWordDao().loadAll());
+        mWords= new ArrayList<String>();
+        for (int i=0; i<mEngList.size(); i++)
+            mWords.add(mEngList.get(i).word);
+    }
+
     private Integer[] getRandomChain(int max, int size) {
         LinkedHashSet<Integer> chain = new LinkedHashSet<Integer>(size);
         do {
@@ -190,6 +226,4 @@ public class DictionaryManager {
         } while (chain.size() < size);
         return chain.toArray(new Integer[size]);
     }
-
-
 }

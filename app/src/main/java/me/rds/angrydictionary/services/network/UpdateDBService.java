@@ -84,8 +84,7 @@ public final class UpdateDBService extends IntentService{
         DBFileInfo.Array arr= new Gson().fromJson(msg, DBFileInfo.Array.class);
         long last= AppPrefs.getLastDictUpdate(UpdateDBService.this);
         for (int i=0; i<arr.files.length; i++){
-            if (last>arr.files[i].timestamp)
-                continue;
+            if (last<arr.files[i].timestamp)
             saveDB(arr.files[i].url);
         }
 
@@ -97,10 +96,10 @@ public final class UpdateDBService extends IntentService{
         File f= new File(path);
         f.createNewFile();
         OutputStream wrt= new  FileOutputStream(f);
-        new HttpsClient().start(AppConsts.DROPBOX_HOST + url, wrt);
+        new HttpsClient().start(AppConsts.DROPBOX_HOST + url, wrt); //REWRITE to GET FILE DESCRIPTION
         wrt.flush();
         wrt.close();
-        Log.e("UDAPTE_DB", "1");
+        Log.e("UDAPTE_DB", "1" + path);
         SQLiteDatabase db=SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READWRITE);
         DaoMaster m=  new DaoMaster(db,1);
         DaoSession s=m.newSession();

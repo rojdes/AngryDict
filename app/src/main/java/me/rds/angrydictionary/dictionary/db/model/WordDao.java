@@ -71,7 +71,7 @@ public class WordDao extends AbstractDao<Word, Long> {
         entity.primaryLang = Language.getFrom(cursor.getString(offset + 2).charAt(0));
         entity.secondaryLang = Language.getFrom(cursor.getString(offset + 3).charAt(0));
         entity.word = cursor.getString(offset + 4);
-        entity.setTranslatesFromDB(cursor.getString(offset + 5));
+        entity.setTranslatesTakeFromFromDB(cursor.getString(offset + 5));
     }
 
     //Reads the values from the current position of the given cursor and create new entity.
@@ -83,7 +83,7 @@ public class WordDao extends AbstractDao<Word, Long> {
         entity.primaryLang = Language.getFrom(cursor.getString(offset + 2).charAt(0));
         entity.secondaryLang = Language.getFrom(cursor.getString(offset + 3).charAt(0));
         entity.word = cursor.getString(offset + 4);
-        entity.setTranslatesFromDB(cursor.getString(offset + 5));
+        entity.setTranslatesTakeFromFromDB(cursor.getString(offset + 5));
         return entity;
     }
 

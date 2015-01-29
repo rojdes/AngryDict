@@ -48,7 +48,7 @@ public class FragmentFactory extends Fragment {
 //
 //        Word w2= new Word();
 //
-//        w2.setTranslatesFromDB(w.getTranslatesAsString());
+//        w2.setTranslatesTakeFromFromDB(w.getTranslatesAsString());
 //        Log.e(TAG + index, w2.getTranslatesAsString());
 
         Log.e(TAG + index, DictionaryManager.getInstance(getActivity()).getWord("introduce").getTranslatesAsString());

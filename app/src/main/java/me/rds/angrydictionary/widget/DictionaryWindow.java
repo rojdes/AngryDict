@@ -44,7 +44,6 @@ public class DictionaryWindow {
       mPlayIntent = new Intent(mContext, MediaIntentService.class);
     }
 
-
     public void build(){
        buildWindow(DictionaryManager.getInstance(mContext).getWord(Language.ENG));
     }

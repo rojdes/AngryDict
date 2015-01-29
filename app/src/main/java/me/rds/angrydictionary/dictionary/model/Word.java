@@ -54,7 +54,7 @@ public class Word {
         return bb.delete(bb.length() - 2, bb.length()).toString();
     }
 
-    public void setTranslatesFromDB(String array) {
+    public void setTranslatesTakeFromFromDB(String array) {
         if (TextUtils.isEmpty(array))
             translates = new String[0];
         else if (!array.contains(SEPARATOR))
@@ -66,5 +66,10 @@ public class Word {
             while (tt.hasMoreTokens())
                 translates[i++] = tt.nextToken();
         }
+    }
+
+    @Override
+    public String toString(){
+        return "word = " + word;
     }
 }
