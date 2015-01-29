@@ -41,8 +41,7 @@ public class VolumeHelper {
 
     public static int getMax() {
         initAudioManagerIfNeeded();
-        //return mAmManager.getStreamMaxVolume(MUSIC_STREAM);
-        return 2;
+        return mAmManager.getStreamMaxVolume(MUSIC_STREAM);
     }
 
     private static void initAudioManagerIfNeeded() {
