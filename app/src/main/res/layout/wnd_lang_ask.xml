@@ -67,24 +67,25 @@
             app:layout_columnSpan="2"
             app:layout_gravity="center"
             app:layout_row="1">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:text="1"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:background="@drawable/bg_wnd_tv_counter"
-                android:textColor="@android:color/white"
-                android:gravity="center"
-                android:id="@+id/wnd_tv_counter"
-                android:layout_centerInParent="true" />
+
 
             <ProgressBar
                 android:id="@+id/wnd_pb"
                 android:indeterminateDrawable="@drawable/wnd_circular_progress_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="@dimen/wnd_progress_size"
+                android:layout_height="@dimen/wnd_progress_size"
+                android:layout_margin="5dp"
+                android:text="1"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:id="@+id/wnd_tv_counter"
+                android:layout_centerInParent="true" />
         </RelativeLayout>
 
 
