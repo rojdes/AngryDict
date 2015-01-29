@@ -67,6 +67,8 @@ public class DictionaryWindow {
     }
 
     private void buildWindow(final TrueWord w) {
+        if (w==null)
+            return;
         final View view = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.wnd_lang_ask, null, false);
         initSubViews(view,w);
         new WindowHelper.Builder(mContext, mWindowHelper, view).setListeners(new WindowHelper.OnClickListener() {
@@ -110,7 +112,6 @@ public class DictionaryWindow {
                 }
             }
         }.start();
-
     }
 
     private void initSubViews(View view, Word w) {

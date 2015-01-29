@@ -147,6 +147,8 @@ public class DictionaryManager {
         updateListIfNeeded();
         TrueWord word = new TrueWord();
         Integer[] chain = getRandomChain(mEngList.size(), INT);
+        if (chain==null)
+            return null;
         word.trueWordNumber = new Random().nextInt(INT);
         Word w = mEngList.get(chain[word.trueWordNumber]);
         word.word = w.word;
@@ -179,6 +181,8 @@ public class DictionaryManager {
     }
 
     private Integer[] getRandomChain(int max, int size) {
+        if (max<=0)
+            return null;
         LinkedHashSet<Integer> chain = new LinkedHashSet<Integer>(size);
         do {
             chain.add(new Random().nextInt(max));

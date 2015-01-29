@@ -40,6 +40,7 @@ public class BinaryClockWidget extends AppWidgetProvider {
     public void onEnabled(Context context) {
         super.onEnabled(context);
         Log.e(TAG, "ON ENABLED");
+        context.sendBroadcast(new Intent(AppIntents.Action.TIME));
     }
 
 
