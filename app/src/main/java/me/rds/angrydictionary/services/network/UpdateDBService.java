@@ -85,8 +85,10 @@ public final class UpdateDBService extends IntentService{
         DBFileInfo.Array arr= new Gson().fromJson(msg, DBFileInfo.Array.class);
         long last= AppPrefs.getLastDictUpdate(UpdateDBService.this);
         for (int i=0; i<arr.files.length; i++){
-            if (last<arr.files[i].timestamp)
-            saveDB(arr.files[i].url);
+            if (last<arr.files[i].timestamp) {
+                saveDB(arr.files[i].url);
+                saveMp3Zip(arr.files[i].mp3ZipUrl);
+            }
         }
 
     }
@@ -109,22 +111,24 @@ public final class UpdateDBService extends IntentService{
         Log.e("UDAPTE_DB", "4");
         mm.addNewWords(s.getWordDao().loadAll());
         //mm.addNewUsages(s.getUsageDao().loadAll());
-        //mm.addNewMP3s(s.getMp3Dao().loadAll());
+        mm.addNewMP3s(s.getMp3Dao().loadAll());
         s.clear();
         f.delete();
         mm=null;
     }
 
+    private void saveMp3Zip(String url) throws RuntimeException, Exception {
+        Log.e("UPDATE_DB", "=====SAVE  MP3===");
+        String path=AppConsts.EXT_FOLDER_MP3 + url.substring(0, 5);
+        File f= new File(path);
+        f.createNewFile();
+        OutputStream wrt= new  FileOutputStream(f);
+        new HttpsClient().start(AppConsts.DROPBOX_HOST + url, wrt); //REWRITE to GET FILE DESCRIPTION
+        wrt.flush();
+        wrt.close();
 
-//    private void simpleLoad(final String url){
-//        new HttpsClient().start(url, false,new OnGetContentListener() {
-//            @Override
-//            public void onGetContent(String msg, Exception error) {
-//
-//                intentAnswer.putExtra(AppIntents.Extra.SERVER_RESPONSE, (msg!=null?msg:error.toString()));
-//                intentAnswer.putExtra(AppIntents.Extra.LINK, url);
-//                LocalBroadcastManager.getInstance(UpdateDBService.this).sendBroadcast(intentAnswer);
-//            }
-//        });
-//    }
+
+        //f.delete();
+    }
+
 }
