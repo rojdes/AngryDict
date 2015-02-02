@@ -148,7 +148,9 @@ public class DictionaryWindow {
     private Intent onSelectTrueWord(Word w){
         Log.e(TAG, "onSelectTrueWord");
         mPlayIntent.setAction(AppIntents.Action.PLAY_WORD);
-        mPlayIntent.putExtra(AppIntents.Extra.PLAY_WORD, DictionaryManager.getInstance(mContext).getMP3For(w.word));
+        String mp3=DictionaryManager.getInstance(mContext).getMP3For(w.word);
+        Log.e("DICTIONARY", "MP3 is = " + mp3  +  ", word is " + w.word);
+        mPlayIntent.putExtra(AppIntents.Extra.PLAY_FILE, mp3);
         return mPlayIntent;
     }
 

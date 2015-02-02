@@ -54,11 +54,11 @@ public class CustomMediaPlayer {
         try {
             mMediaPlayer.prepare();
         } catch (IOException e) {
-            Log.e("MEDIA", " prepare Illegal =" + e.toString());
+            Log.e("MEDIA", " prepare exception =" + e.toString());
             if (mMediaPlayer != null)
                 mMediaPlayer.reset();
         } catch (IllegalStateException e) {
-            Log.e("MEDIA", " prepare Illegal =" + e.toString());
+            Log.e("MEDIA", " prepare Illegal state=" + e.toString());
             if (mMediaPlayer != null)
                 mMediaPlayer.reset();
         }

@@ -20,6 +20,7 @@ import me.rds.angrydictionary.communications.https.HttpsClient;
 import me.rds.angrydictionary.communications.https.listeners.OnGetContentListener;
 import me.rds.angrydictionary.dictionary.db.generators.DaoMaster;
 import me.rds.angrydictionary.dictionary.db.generators.DaoSession;
+import me.rds.angrydictionary.dictionary.db.model.MP3Dao;
 import me.rds.angrydictionary.dictionary.db.model.WordDao;
 import me.rds.angrydictionary.dictionary.listeners.DictionaryActionsCallBack;
 import me.rds.angrydictionary.dictionary.model.MP3Phrase;
@@ -128,7 +129,7 @@ public class DictionaryManager {
     }
 
     public String getMP3For(String word) {
-        Query query = mDaoSession.getMp3Dao().queryBuilder().where(WordDao.Properties.Word.eq(word)).build();
+        Query query = mDaoSession.getMp3Dao().queryBuilder().where(MP3Dao.Properties.Word.like(word)).build();
         List<MP3Phrase> list=query.list();
         return list.size()>0?list.get(0).mp3:"";
     }

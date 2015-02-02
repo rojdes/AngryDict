@@ -32,7 +32,7 @@ public class MediaIntentService extends IntentService {
             startPlayError();
         }
         if (intent.getAction().equals(AppIntents.Action.PLAY_WORD)) {
-            startPlayWord(intent.getStringExtra(AppIntents.Action.PLAY_WORD));
+            startPlayWord(AppConsts.EXT_FOLDER_MP3 + intent.getStringExtra(AppIntents.Extra.PLAY_FILE));
         }
     }
 
@@ -47,8 +47,9 @@ public class MediaIntentService extends IntentService {
     }
 
     private void startPlayWord(String mp3) {
+        Log.e("MEDIA_INTENT_SERVICE", "PLAY WORD IS  = " + mp3);
         if (TextUtils.isEmpty(mp3)) return;
         Log.e(THREAD_NAME_FOR_DEBUG, mp3);
-        mMediaPlayer.playAudio(AppConsts.EXT_FOLDER_MP3 + mp3);
+        mMediaPlayer.playAudio(mp3);
     }
 }

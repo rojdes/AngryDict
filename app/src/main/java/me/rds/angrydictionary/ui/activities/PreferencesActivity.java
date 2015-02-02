@@ -24,6 +24,7 @@ import me.rds.angrydictionary.AppPrefs;
 import me.rds.angrydictionary.R;
 import me.rds.angrydictionary.dictionary.managers.DictionaryManager;
 import me.rds.angrydictionary.dictionary.model.Word;
+import me.rds.angrydictionary.services.media.MediaIntentService;
 import me.rds.angrydictionary.services.network.UpdateDBService;
 import me.rds.angrydictionary.ui.activities.adapters.DifficultyAdapter;
 import me.rds.angrydictionary.ui.activities.adapters.model.DifficultyLevel;
@@ -130,15 +131,25 @@ public class PreferencesActivity extends ActionBarActivity {
         mtvPeriodShow.setText(String.valueOf(AppPrefs.getPeriodShow(this)));
         mtvAnswerClick.setText(String.valueOf(AppPrefs.getTimeAnswer(this)));
         mtvTransparency.setText(String.valueOf(AppPrefs.getTransparency(this)));
+        fakeTestMp3();
+
   //      ListsUtils.printAll(TAG,DictionaryManager.getInstance(this).getAvailableList());
+    }
+
+    private void fakeTestMp3() {
+        ///storage/sdcard0/language/mp3/recognize.mp3
+        Intent mPlayIntent = new Intent(this, MediaIntentService.class);
+        mPlayIntent.setAction(AppIntents.Action.PLAY_WORD);
+        mPlayIntent.putExtra(AppIntents.Extra.PLAY_FILE, "recognize.mp3");
+        startService(mPlayIntent);
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        Intent intent= new Intent(this, UpdateDBService.class);
-        intent.setAction(AppIntents.Action.UPDATE_DICT);
-        startService(intent);
+//        Intent intent= new Intent(this, UpdateDBService.class);
+//        intent.setAction(AppIntents.Action.UPDATE_DICT);
+//        startService(intent);
    }
 
     private void buildScreenPhantom(){

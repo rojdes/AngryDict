@@ -20,7 +20,7 @@ public interface AppIntents {
 
 
     public static interface Extra {
-        public static String PLAY_WORD = "me.rds.angrydictionary.word.extra";
+        public static String PLAY_FILE = "me.rds.angrydictionary.word.extra";
         public static String LINK = "me.rds.angrydictionary.link";
 
         public static String SERVER_RESPONSE = "me.rds.angrydictionary.server.response";
