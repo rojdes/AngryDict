@@ -1,4 +1,4 @@
-package me.rds.angrydictionary.ui.activities.adapters.model;
+package me.rds.angrydictionary.ui.adapters.model;
 
 import android.content.Context;
 import android.graphics.Point;

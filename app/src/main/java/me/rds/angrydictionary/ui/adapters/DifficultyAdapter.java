@@ -1,4 +1,4 @@
-package me.rds.angrydictionary.ui.activities.adapters;
+package me.rds.angrydictionary.ui.adapters;
 
 import android.content.Context;
 import android.os.Build;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import me.rds.angrydictionary.R;
-import me.rds.angrydictionary.ui.activities.adapters.model.DifficultyLevel;
+import me.rds.angrydictionary.ui.adapters.model.DifficultyLevel;
 
 /**
  * Created by D1m11n on 20.01.2015.
