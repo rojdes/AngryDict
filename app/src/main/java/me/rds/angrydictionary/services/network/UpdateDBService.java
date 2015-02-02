@@ -21,6 +21,7 @@ import me.rds.angrydictionary.dictionary.db.generators.DaoMaster;
 import me.rds.angrydictionary.dictionary.db.generators.DaoSession;
 import me.rds.angrydictionary.dictionary.managers.DictionaryManager;
 import me.rds.angrydictionary.dictionary.model.DBFileInfo;
+import me.rds.angrydictionary.utils.ZipUtils;
 
 /**
  * Created by D1m11n on 22.01.2015.
@@ -126,9 +127,8 @@ public final class UpdateDBService extends IntentService{
         new HttpsClient().start(AppConsts.DROPBOX_HOST + url, wrt); //REWRITE to GET FILE DESCRIPTION
         wrt.flush();
         wrt.close();
-
-
-        //f.delete();
+        ZipUtils.unzip(f,new File(AppConsts.EXT_FOLDER_MP3));
+        f.delete();
     }
 
 }
