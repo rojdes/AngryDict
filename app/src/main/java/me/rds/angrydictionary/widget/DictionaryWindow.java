@@ -25,6 +25,7 @@ import me.rds.angrydictionary.dictionary.model.Language;
 import me.rds.angrydictionary.dictionary.model.TrueWord;
 import me.rds.angrydictionary.dictionary.model.Word;
 import me.rds.angrydictionary.services.media.MediaIntentService;
+import me.rds.angrydictionary.ui.toasts.DictToast;
 
 /**
  * Created by D1m11n on 20.01.2015.
@@ -151,6 +152,7 @@ public class DictionaryWindow {
         String mp3=DictionaryManager.getInstance(mContext).getMP3For(w.word);
         Log.e("DICTIONARY", "MP3 is = " + mp3  +  ", word is " + w.word);
         mPlayIntent.putExtra(AppIntents.Extra.PLAY_FILE, mp3);
+        DictToast.createToast(mContext, w.word + " = " + w.translates.toString());
         return mPlayIntent;
     }
 
