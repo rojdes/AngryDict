@@ -149,7 +149,7 @@ public class DictionaryWindow {
         mbtnsAnswers[3]=(Button) rootView.findViewById(R.id.wnd_btn_ask4);
         for (int i=0; i<4; i++){
             AutofitHelper.create(mbtnsAnswers[i]);
-            mbtnsAnswers[i].setText(w.translates[i] + (i%2==1?" ":""));
+            mbtnsAnswers[i].setText(w.translates[i]);
         }
     }
 
