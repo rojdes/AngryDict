@@ -47,11 +47,22 @@ public class Word {
     }
 
     public String getTranslatesAsString() {
+//        if (translates == null || translates.length == 0) return "";
+//        StringBuilder bb = new StringBuilder();
+//        for (int i = 0; i < translates.length; i++)
+//            bb.append(translates[i] + SEPARATOR);
+//        return bb.delete(bb.length() - 2, bb.length()).toString();
+        return getTranslatesAsString(SEPARATOR);
+    }
+
+    public String getTranslatesAsString(String separator) {
+        if (separator==null)
+            separator=SEPARATOR;
         if (translates == null || translates.length == 0) return "";
         StringBuilder bb = new StringBuilder();
         for (int i = 0; i < translates.length; i++)
-            bb.append(translates[i] + SEPARATOR);
-        return bb.delete(bb.length() - 2, bb.length()).toString();
+            bb.append(translates[i] + separator);
+        return bb.delete(bb.length() - separator.length(), bb.length()).toString();
     }
 
     public void setTranslatesTakeFromFromDB(String array) {

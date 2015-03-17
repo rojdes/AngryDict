@@ -1,117 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="220dp"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bkg_window">
 
-
-    <me.grantland.widget.AutofitLayout
-        android:id="@+id/inner"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="220dp"
+        android:layout_centerInParent="true"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/wndTvAsk"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bg_wnd_tv_word"
-            android:gravity="center"
-            android:lines="1"
-            android:padding="5dp"
-            android:textColor="@android:color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-    </me.grantland.widget.AutofitLayout>
-
-    <android.support.v7.widget.GridLayout
-        android:layout_width="@dimen/wnd_title_width"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/inner"
-        app:columnCount="2"
-        app:rowCount="3">
 
         <me.grantland.widget.AutofitLayout
-            android:layout_width="@dimen/wnd_btn_width"
+            android:id="@+id/inner"
+            android:layout_width="220dp"
             android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/wnd_btn_ask1"
-                style="@style/WndButton"
-                android:tag="0"
-                app:layout_column="0"
-                app:layout_row="0" />
-        </me.grantland.widget.AutofitLayout>
-
-        <me.grantland.widget.AutofitLayout
-            android:layout_width="@dimen/wnd_btn_width"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/wnd_btn_ask2"
-                style="@style/WndButton"
-                android:tag="1"
-                app:layout_column="1"
-                app:layout_row="0" />
-        </me.grantland.widget.AutofitLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/wnd_rlt_progress"
-            android:layout_width="@dimen/wnd_progress_size"
-            android:layout_height="@dimen/wnd_progress_size"
-            app:layout_column="0"
-            app:layout_columnSpan="2"
-            app:layout_gravity="center"
-            app:layout_row="1">
-
-
-            <ProgressBar
-                android:id="@+id/wnd_pb"
-                android:indeterminateDrawable="@drawable/wnd_circular_progress_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/wndTvAsk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_wnd_tv_word"
+                android:gravity="center"
+                android:lines="1"
+                android:padding="5dp"
+                android:textColor="@android:color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+        </me.grantland.widget.AutofitLayout>
+
+        <android.support.v7.widget.GridLayout
+            android:layout_width="@dimen/wnd_title_width"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/inner"
+            app:columnCount="2"
+            app:rowCount="3">
+
+            <me.grantland.widget.AutofitLayout
+                android:layout_width="@dimen/wnd_btn_width"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/wnd_btn_ask1"
+                    style="@style/WndButton"
+                    android:tag="0"
+                    app:layout_column="0"
+                    app:layout_row="0" />
+            </me.grantland.widget.AutofitLayout>
+
+            <me.grantland.widget.AutofitLayout
+                android:layout_width="@dimen/wnd_btn_width"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/wnd_btn_ask2"
+                    style="@style/WndButton"
+                    android:tag="1"
+                    app:layout_column="1"
+                    app:layout_row="0" />
+            </me.grantland.widget.AutofitLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/wnd_rlt_progress"
                 android:layout_width="@dimen/wnd_progress_size"
                 android:layout_height="@dimen/wnd_progress_size"
-                android:layout_margin="5dp"
-                android:text="1"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textColor="@android:color/white"
-                android:gravity="center"
-                android:id="@+id/wnd_tv_counter"
-                android:layout_centerInParent="true" />
-        </RelativeLayout>
-
-
-        <me.grantland.widget.AutofitLayout
-            android:layout_width="@dimen/wnd_btn_width"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/wnd_btn_ask3"
-                style="@style/WndButton"
-                android:tag="2"
                 app:layout_column="0"
-                app:layout_row="2" />
-        </me.grantland.widget.AutofitLayout>
+                app:layout_columnSpan="2"
+                app:layout_gravity="center"
+                app:layout_row="1">
 
-        <me.grantland.widget.AutofitLayout
-            android:layout_width="@dimen/wnd_btn_width"
-            android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/wnd_btn_ask4"
-                style="@style/WndButton"
-                android:tag="3"
-                app:layout_column="1"
-                app:layout_row="2" />
-        </me.grantland.widget.AutofitLayout>
-    </android.support.v7.widget.GridLayout>
+                <ProgressBar
+                    android:id="@+id/wnd_pb"
+                    android:indeterminateDrawable="@drawable/wnd_circular_progress_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
+                <TextView
+                    android:layout_width="@dimen/wnd_progress_size"
+                    android:layout_height="@dimen/wnd_progress_size"
+                    android:layout_margin="5dp"
+                    android:text="1"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:id="@+id/wnd_tv_counter"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+
+            <me.grantland.widget.AutofitLayout
+                android:layout_width="@dimen/wnd_btn_width"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/wnd_btn_ask3"
+                    style="@style/WndButton"
+                    android:tag="2"
+                    app:layout_column="0"
+                    app:layout_row="2" />
+            </me.grantland.widget.AutofitLayout>
+
+            <me.grantland.widget.AutofitLayout
+                android:layout_width="@dimen/wnd_btn_width"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/wnd_btn_ask4"
+                    style="@style/WndButton"
+                    android:tag="3"
+                    app:layout_column="1"
+                    app:layout_row="2" />
+            </me.grantland.widget.AutofitLayout>
+        </android.support.v7.widget.GridLayout>
+
+    </RelativeLayout>
 </RelativeLayout>

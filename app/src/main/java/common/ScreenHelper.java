@@ -63,6 +63,7 @@ public class ScreenHelper {
     private static ScreenSizePx getLandscapeSize(Context context) {
         if (mLandscapeSize == null) {
             mLandscapeSize = new ScreenSizePx();
+
             mLandscapeSize.mWidthPx = context.getResources().getDisplayMetrics().widthPixels;
             mLandscapeSize.mHeightPx = context.getResources().getDisplayMetrics().heightPixels;
         }

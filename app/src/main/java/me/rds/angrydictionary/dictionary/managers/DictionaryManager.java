@@ -114,7 +114,7 @@ public class DictionaryManager {
 
     public void addNewMP3s(List<MP3Phrase>  mp3) {
         if (ListsUtils.isEmpty(mp3)) return;
-        mDaoSession.getMp3Dao().insertOrReplaceInTx(mp3 );
+        mDaoSession.getMp3Dao().insertOrReplaceInTx(mp3);
     }
 
 

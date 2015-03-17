@@ -1,11 +1,11 @@
-package me.rds.angrydictionary.ui.adapters.model;
+package me.rds.angrydictionary.helpers.model;
 
 import android.graphics.Point;
 
 /**
  * Created by D1m11n on 20.01.2015.
  */
-public class WindowParams {
+public class RelativeWindowParams {
 
     public Point topLeftCorner;
 

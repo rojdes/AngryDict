@@ -76,14 +76,14 @@ public class AppPrefs {
     }
 
 
-    public static void setPhantomScreenHeight(Context context, int value) {
+    public static void setSystemWindowLevel(Context context, int value) {
         ensureInitPrefs(context);
-        mEditor.putInt(Key.PHANTOM_HEIGHT, value).apply();
+        mEditor.putInt(Key.WINDOW_LEVEL, value).apply();
     }
 
-    public static int getPhantomScreenHeight(Context context) {
+    public static int getSystemWindowLevel(Context context) {
         ensureInitPrefs(context);
-        return mPrefs.getInt(Key.PHANTOM_HEIGHT, -1);
+        return mPrefs.getInt(Key.WINDOW_LEVEL, -1);
     }
 
     public static void setLastDictUpdate(Context context, long value) {
@@ -110,7 +110,7 @@ public class AppPrefs {
         static String SERVER_IP = "ip";
         static String SERVER_PORT = "port";
         static String TRANSPARENCY = "transparency";
-        static String PHANTOM_HEIGHT="ph_height";
+        static String WINDOW_LEVEL ="ph_height";
         static String LAST_UPDATE="last_update";
 
     }

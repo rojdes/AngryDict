@@ -10,12 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import me.rds.angrydictionary.R;
-import me.rds.angrydictionary.ui.adapters.model.DifficultyLevel;
+import me.rds.angrydictionary.helpers.DifficultyLevelWindowHelper;
 
 /**
  * Created by D1m11n on 20.01.2015.
  */
-public class DifficultyAdapter extends ArrayAdapter<String> {
+public class DifficultyLevelsAdapter extends ArrayAdapter<String> {
 
     /**
      * Constructor
@@ -28,21 +28,21 @@ public class DifficultyAdapter extends ArrayAdapter<String> {
     private static final int ID_TEXT=R.id.spn_tv;
     private static final int ID_IMAGE=R.id.spn_iv;
     private static String [] list;
-    private static DifficultyAdapter mDifficultyAdapter;
+    private static DifficultyLevelsAdapter mDifficultyAdapter;
     private Context mContext;
 
 
 
 
-    private DifficultyAdapter(Context context) {
+    private DifficultyLevelsAdapter(Context context) {
         super(context, ID_LAYOUT,ID_TEXT);
         mContext=context;
     }
 
-    public static DifficultyAdapter getInstance(Context context){
+    public static DifficultyLevelsAdapter getInstance(Context context){
         if(mDifficultyAdapter==null) {
-            list = DifficultyLevel.getLevelsList(context);
-            mDifficultyAdapter= new DifficultyAdapter(context);
+            list = DifficultyLevelWindowHelper.getLevelsList(context);
+            mDifficultyAdapter= new DifficultyLevelsAdapter(context);
         }
         return mDifficultyAdapter;
     }

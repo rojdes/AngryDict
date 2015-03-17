@@ -24,7 +24,10 @@ import me.rds.angrydictionary.dictionary.managers.DictionaryManager;
 import me.rds.angrydictionary.dictionary.model.Language;
 import me.rds.angrydictionary.dictionary.model.TrueWord;
 import me.rds.angrydictionary.dictionary.model.Word;
+import me.rds.angrydictionary.helpers.model.AbsoluteWindowParams;
 import me.rds.angrydictionary.services.media.MediaIntentService;
+import me.rds.angrydictionary.helpers.DifficultyLevelWindowHelper;
+import me.rds.angrydictionary.helpers.model.RelativeWindowParams;
 import me.rds.angrydictionary.ui.toasts.DictToast;
 
 /**
@@ -71,15 +74,19 @@ public class DictionaryWindow {
         if (w==null)
             return;
         final View view = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.wnd_lang_ask, null, false);
-        initSubViews(view,w);
+        initSubViews(view, w);
+        AbsoluteWindowParams params = DifficultyLevelWindowHelper.getWindowSizeFor(mContext, AppPrefs.getSystemWindowLevel(mContext));
+        Log.e(TAG, "params = " + params.toString());
+
         new WindowHelper.Builder(mContext, mWindowHelper, view).setListeners(new WindowHelper.OnClickListener() {
 
             @Override
             public void onClick(Object tag) {
-                doOnClick(tag,w,view);
+                doOnClick(tag, w, view);
             }
         }, IDS_BUTTONS)
-                .setWindowParams(ScreenHelper.getPxInDpi(mContext, true)* AppConsts.MIN_WINDOW_WIDTHdp+1, ScreenHelper.getPxInDpi(mContext,false)*AppConsts.MIN_WINDOW_HEIGHTdp+1)
+                //.setWindowParams(ScreenHelper.getPxInDpi(mContext, true) * AppConsts.MIN_WINDOW_WIDTHdp + 1, ScreenHelper.getPxInDpi(mContext, false) * AppConsts.MIN_WINDOW_HEIGHTdp + 1)
+                .setWindowParams(params.width, params.height)
                 .setFormat(PixelFormat.TRANSPARENT)
                 .setGravity(Gravity.CENTER)
                 .build();
@@ -142,17 +149,17 @@ public class DictionaryWindow {
         mbtnsAnswers[3]=(Button) rootView.findViewById(R.id.wnd_btn_ask4);
         for (int i=0; i<4; i++){
             AutofitHelper.create(mbtnsAnswers[i]);
-            mbtnsAnswers[i].setText(w.translates[i]);
+            mbtnsAnswers[i].setText(w.translates[i] + (i%2==1?" ":""));
         }
     }
 
-    private Intent onSelectTrueWord(Word w){
+    private Intent onSelectTrueWord(TrueWord w){
         Log.e(TAG, "onSelectTrueWord");
         mPlayIntent.setAction(AppIntents.Action.PLAY_WORD);
         String mp3=DictionaryManager.getInstance(mContext).getMP3For(w.word);
         Log.e("DICTIONARY", "MP3 is = " + mp3  +  ", word is " + w.word);
         mPlayIntent.putExtra(AppIntents.Extra.PLAY_FILE, mp3);
-        DictToast.createToast(mContext, w.word + " = " + w.translates.toString());
+        DictToast.createToast(mContext, w.word + " = " + w.translates[w.trueWordNumber]);
         return mPlayIntent;
     }
 

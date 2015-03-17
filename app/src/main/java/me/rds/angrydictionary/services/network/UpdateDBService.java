@@ -3,6 +3,7 @@ package me.rds.angrydictionary.services.network;
 import android.app.IntentService;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.CalendarContract;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -11,6 +12,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Calendar;
 
 import me.rds.angrydictionary.AppConsts;
 import me.rds.angrydictionary.AppIntents;
@@ -22,6 +24,7 @@ import me.rds.angrydictionary.dictionary.db.generators.DaoSession;
 import me.rds.angrydictionary.dictionary.managers.DictionaryManager;
 import me.rds.angrydictionary.dictionary.model.DBFileInfo;
 import me.rds.angrydictionary.utils.ZipUtils;
+import me.rds.angrydictionary.widget.ClockService;
 
 /**
  * Created by D1m11n on 22.01.2015.
@@ -64,6 +67,8 @@ public final class UpdateDBService extends IntentService{
     }
 
     private void updateDictionary() {
+        if(AppPrefs.getLastDictUpdate(UpdateDBService.this)!=0&&(Calendar.getInstance().getTimeInMillis()- AppPrefs.getLastDictUpdate(UpdateDBService.this)<AppConsts.MIN_TIME_WAIT_UPDATEms))
+            return;
         new HttpsClient().start(AppConsts.LINK_DB_LIST, false,new OnGetContentListener() {
             @Override
             public void onGetContent(String msg, Exception error) {
@@ -77,6 +82,9 @@ public final class UpdateDBService extends IntentService{
                     Log.e("DB_UPDATE", e.toString());
                     intentAnswer.putExtra(AppIntents.Extra.SERVER_RESPONSE, "ERROR ON UPDATE " + e.toString());
                     LocalBroadcastManager.getInstance(UpdateDBService.this).sendBroadcast(intentAnswer);
+                }finally{
+                    AppPrefs.setLastDictUpdate(UpdateDBService.this, Calendar.getInstance().getTimeInMillis());
+                    startService(new Intent(UpdateDBService.this, ClockService.class));
                 }
             }
         });

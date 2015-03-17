@@ -22,10 +22,13 @@ public interface AppConsts {
 
     public static int TRANSPARENCY = 100;
 
-    public static String DROPBOX_HOST="https://dl.dropboxusercontent.com/s/";
+    String DROPBOX_HOST="https://dl.dropboxusercontent.com/s/";
 
     public static final String LINK_DB_LIST =DROPBOX_HOST + "3s2perzfoww5qdi/db_link?dl=0";
 
+    long MIN_TIME_WAIT_UPDATEms = 300000L;
+
     //public static final String LINK_PRIMARY_DB =DROPBOX_HOST +"3omsy8izc7zmphx/dictionary_primary.db?dl=0";
+
 
 }

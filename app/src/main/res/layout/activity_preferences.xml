@@ -79,25 +79,5 @@
             android:layout_height="wrap_content"
             android:id="@+id/spn_prefs_difficulty"
             android:layout_gravity="center_horizontal" />
-
-        <RelativeLayout
-            android:id="@+id/rlt_prefs_screen"
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="10dp"
-            android:layout_height="100dp"
-            android:background="@drawable/bg_phantom_screen"
-            android:layout_gravity="center_horizontal">
-
-            <common.views.ResizableView
-                android:id="@+id/rsw_prefs"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@color/red"/>
-
-        </RelativeLayout>
-
     </LinearLayout>
 </common.views.LockableScrollView>

@@ -5,5 +5,6 @@
     <color name="hint_orange">#fc8936</color>
     <color name="red_primary">#f0002e</color>
     <color name="green">#67A934</color>
+    <color name="bkg_window">#40F53D00</color>
 
 </resources>
