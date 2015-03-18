@@ -78,6 +78,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/spn_prefs_difficulty"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/Goto_State_window"
+            android:padding="15dp"
+            android:layout_marginBottom="30dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_prefs_open_console"
+            android:background="@drawable/ic_ext_thumb"
             android:layout_gravity="center_horizontal" />
+
+
     </LinearLayout>
 </common.views.LockableScrollView>

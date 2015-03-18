@@ -10,4 +10,7 @@
     <string name="Location_and_size">Location and size</string>
     <string name="Disable">Disable</string>
     <string name="Enable">Enable</string>
+    <string name="Goto_State_window">Goto State Window</string>
+    <string name="Display">Display</string>
+    <string name="Show">Show</string>
 </resources>

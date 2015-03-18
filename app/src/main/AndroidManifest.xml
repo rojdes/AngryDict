@@ -31,6 +31,14 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.activities.StateConsoleActivity"
+            android:icon="@drawable/ic_prefs" android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <receiver android:name=".widget.BinaryClockWidget" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

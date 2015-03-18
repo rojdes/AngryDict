@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/tv_console_words_db_title"
+        android:text="   Words in db  "
+        android:padding="12dp"
+        android:textSize="@dimen/prefs_title_tv_textsize"
+        android:gravity="center"
+        android:drawableLeft="@drawable/ic_launcher" />
+    <TextView
+        android:id="@+id/tv_stats_words_in_db"
+        style="@style/TextView.PrefsValues"
+        android:layout_alignBaseline="@+id/tv_console_words_db_title"
+        android:layout_toRightOf="@+id/tv_console_words_db_title"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@+id/iv_prefs_open_console"
+        android:layout_toStartOf="@+id/iv_prefs_open_console" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="@string/Display"
+        android:padding="15dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_prefs_open_console"
+        android:background="@drawable/ic_ext_thumb"
+        android:layout_alignBaseline="@+id/tv_console_words_db_title"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginRight="15dp"
+        android:layout_alignParentRight="true"
+         />
+</RelativeLayout>

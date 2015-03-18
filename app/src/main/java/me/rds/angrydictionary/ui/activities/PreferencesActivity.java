@@ -77,7 +77,7 @@ public class PreferencesActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preferences);
+        setContentView(R.layout.act_preferences);
         findViews();
         engineViews();
 
@@ -108,6 +108,12 @@ public class PreferencesActivity extends ActionBarActivity {
         msbTransparency.setOnSeekBarChangeListener(mSeekBarChangelistener);
         mspnDifficulty.setAdapter(DifficultyLevelsAdapter.getInstance(this));
         mspnDifficulty.setOnItemSelectedListener(mOnItemSelected);
+        findViewById(R.id.iv_prefs_open_console).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PreferencesActivity.this.startActivityForResult(new Intent(PreferencesActivity.this,StateConsoleActivity.class),100);
+            }
+        });
     }
 
     @Override
