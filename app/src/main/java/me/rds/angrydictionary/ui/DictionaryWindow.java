@@ -1,22 +1,24 @@
-package me.rds.angrydictionary.widget;
+package me.rds.angrydictionary.ui;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.os.Build;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import common.ScreenHelper;
 import common.WindowHelper;
 import me.grantland.widget.AutofitHelper;
-import me.rds.angrydictionary.AppConsts;
 import me.rds.angrydictionary.AppIntents;
 import me.rds.angrydictionary.AppPrefs;
 import me.rds.angrydictionary.R;
@@ -24,10 +26,9 @@ import me.rds.angrydictionary.dictionary.managers.DictionaryManager;
 import me.rds.angrydictionary.dictionary.model.Language;
 import me.rds.angrydictionary.dictionary.model.TrueWord;
 import me.rds.angrydictionary.dictionary.model.Word;
+import me.rds.angrydictionary.helpers.DifficultyLevelWindowHelper;
 import me.rds.angrydictionary.helpers.model.AbsoluteWindowParams;
 import me.rds.angrydictionary.services.media.MediaIntentService;
-import me.rds.angrydictionary.helpers.DifficultyLevelWindowHelper;
-import me.rds.angrydictionary.helpers.model.RelativeWindowParams;
 import me.rds.angrydictionary.ui.toasts.DictToast;
 
 /**
@@ -47,12 +48,11 @@ public class DictionaryWindow {
 
 
 
-    private ProgressBar mpbProgress;
+    //private ProgressBar mpbProgress;
     private TextView mtvProgressCounter;
     private RelativeLayout mrltProgress;
     private Button [] mbtnsAnswers = new Button[4];
-
-
+    private int mTransitionCount=0;
 
 
     /** THis class not control releasing window in helper
@@ -85,7 +85,6 @@ public class DictionaryWindow {
                 doOnClick(tag, w, view);
             }
         }, IDS_BUTTONS)
-                //.setWindowParams(ScreenHelper.getPxInDpi(mContext, true) * AppConsts.MIN_WINDOW_WIDTHdp + 1, ScreenHelper.getPxInDpi(mContext, false) * AppConsts.MIN_WINDOW_HEIGHTdp + 1)
                 .setWindowParams(params.width, params.height)
                 .setFormat(PixelFormat.TRANSPARENT)
                 .setGravity(Gravity.CENTER)
@@ -99,7 +98,7 @@ public class DictionaryWindow {
            startCountDown(view);
          else
             releaseWindow();
-        mContext.startService(res?onSelectTrueWord(w):onSelectFalseWord());
+        mContext.startService(res ? onSelectTrueWord(w) : onSelectFalseWord());
     }
 
     private void startCountDown(final View view){
@@ -123,14 +122,48 @@ public class DictionaryWindow {
     }
 
     private void initSubViews(View view, Word w) {
-        initButtons(view,w);
-        initTitle(view,w);
+        initRootLayout(view);
+        initButtons(view, w);
+        initTitle(view, w);
         initProgress(view);
 
     }
 
+    private void initRootLayout(View view) {
+       View v=view.findViewById(R.id.wnd_root_layout);
+        int alpha=255 * AppPrefs.getTransparency(mContext) / 100;
+
+        ColorDrawable cl1= new ColorDrawable(mContext.getResources().getColor(R.color.transtion_item1)+alpha*0x1000000);
+        ColorDrawable cl2= new ColorDrawable(mContext.getResources().getColor(R.color.transtion_item2)+alpha*0x1000000);
+        TransitionDrawable transition = new TransitionDrawable( new Drawable[]{cl1,cl2});
+        if(Build.VERSION.SDK_INT<16)
+           v.setBackgroundDrawable(transition);
+        else
+            v.setBackground(transition);
+        mTransitionCount=0;
+        startCyclicTransition(transition);
+
+    }
+
+    private void startCyclicTransition(final TransitionDrawable trans){
+        if (mTransitionCount >=0) {
+            if(mTransitionCount%2==0) {
+                trans.startTransition(2000);
+            }else {
+                trans.reverseTransition(2000);
+            }
+            mTransitionCount++;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startCyclicTransition(trans);
+                }
+            }, 2000);
+        }
+    }
+
     private void initProgress(View view) {
-        mpbProgress =(ProgressBar)view.findViewById(ID_PROGRESS_BAR);
+        //mpbProgress =(ProgressBar)view.findViewById(ID_PROGRESS_BAR);
         mtvProgressCounter=(TextView)view.findViewById(ID_PROGRESS_COUNTER);
         mrltProgress=(RelativeLayout)view.findViewById(ID_PROGRESS);
         mrltProgress.setVisibility(View.GONE);
@@ -171,9 +204,10 @@ public class DictionaryWindow {
 
     private void releaseWindow(){
         mWindowHelper.remove(mContext);
-        mpbProgress=null;
+        //mpbProgress=null;
         mtvProgressCounter=null;
         mrltProgress=null;
+        mTransitionCount=-1;
         for (int i=0; i<4;i ++)
             mbtnsAnswers[i]=null;
     }

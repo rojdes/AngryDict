@@ -41,12 +41,15 @@ public class PreferencesActivity extends ActionBarActivity {
             switch (seekBar.getTag().toString()) {
                 case TAG_PERIOD:
                     mtvPeriodShow.setText(String.valueOf(progress + 1));
+                    AppPrefs.setPeriodShow(PreferencesActivity.this, Integer.valueOf(mtvPeriodShow.getText().toString()));
                     break;
                 case TAG_ANSWER:
                     mtvAnswerClick.setText(String.valueOf(progress + 1));
+                    AppPrefs.setTimeAnswer(PreferencesActivity.this, Integer.valueOf(mtvAnswerClick.getText().toString()));
                     break;
                 case TAG_TRANSPARENCY:
                     mtvTransparency.setText(String.valueOf(progress));
+                    AppPrefs.setTransparency(PreferencesActivity.this, Integer.valueOf(mtvTransparency.getText().toString()));
                     break;
             }
         }
@@ -98,7 +101,7 @@ public class PreferencesActivity extends ActionBarActivity {
         msbAnswerTime.setMax(AppConsts.MAX_TIME_ANSWER - 1);
         msbPeriodShow.setProgress(AppPrefs.getPeriodShow(this) - 1);
         msbAnswerTime.setProgress(AppPrefs.getTimeAnswer(this) - 1);
-        msbTransparency.setMax(AppConsts.TRANSPARENCY);
+        msbTransparency.setMax(AppConsts.TRANSPARENCY-1);
         msbTransparency.setProgress(AppPrefs.getTransparency(this));
         msbPeriodShow.setTag(TAG_PERIOD);
         msbAnswerTime.setTag(TAG_ANSWER);
@@ -111,7 +114,7 @@ public class PreferencesActivity extends ActionBarActivity {
         findViewById(R.id.iv_prefs_open_console).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PreferencesActivity.this.startActivityForResult(new Intent(PreferencesActivity.this,StateConsoleActivity.class),100);
+                PreferencesActivity.this.startActivityForResult(new Intent(PreferencesActivity.this, StateConsoleActivity.class), 100);
             }
         });
     }
@@ -143,12 +146,4 @@ public class PreferencesActivity extends ActionBarActivity {
         intent.setAction(AppIntents.Action.UPDATE_DICT);
         startService(intent);
    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        AppPrefs.setPeriodShow(this, Integer.valueOf(mtvPeriodShow.getText().toString()));
-        AppPrefs.setTimeAnswer(this, Integer.valueOf(mtvAnswerClick.getText().toString()));
-        AppPrefs.setTransparency(this, Integer.valueOf(mtvTransparency.getText().toString()));
-    }
 }

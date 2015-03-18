@@ -1,12 +1,16 @@
 package common;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+
+import me.rds.angrydictionary.AppPrefs;
 
 /**
  * http://stackoverflow.com/questions/19846541/what-is-windowmanager-in-android
@@ -204,10 +208,20 @@ public class WindowHelper {
             p.gravity = mGravity;
             p.x = pX;
             p.y = pY;
+            p.screenOrientation=ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
             WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+            //setAlphaForView(mHelper.getLastView(),255.0F * AppPrefs.getTransparency(mContext) / 100.0F);
             windowManager.addView(mHelper.getLastView(), p);
             return mHelper;
         }
+
+//        private void setAlphaForView(View v, float alpha) {
+//            AlphaAnimation animation = new AlphaAnimation(alpha, alpha);
+//            animation.setDuration(0);
+//            animation.setFillAfter(true);
+//            v.startAnimation(animation);
+//        }
     }
+
 
 }

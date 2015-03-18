@@ -55,7 +55,7 @@
             style="@style/TextView.PrefsTitles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Transparency" />
+            android:text="@string/Transparency_of_background" />
 
         <SeekBar
             android:id="@+id/sb_prefs_transparency"

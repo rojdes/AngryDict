@@ -15,6 +15,7 @@ import android.util.Log;
 import common.WindowHelper;
 import me.rds.angrydictionary.AppIntents;
 import me.rds.angrydictionary.AppPrefs;
+import me.rds.angrydictionary.ui.DictionaryWindow;
 import me.rds.angrydictionary.ui.activities.PreferencesActivity;
 
 @SuppressLint("InflateParams")
