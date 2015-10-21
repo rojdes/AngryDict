@@ -40,7 +40,7 @@ public class ClockService extends Service {
     {   public void run()
         {
             activateDictWindow();
-            mDelayHandler.postDelayed(this, AppPrefs.getPeriodShow(ClockService.this)*60*1000L);
+            mDelayHandler.postDelayed(this, AppPrefs.getPeriodShow(ClockService.this)*60*1000L); //ERROR
         }
     };
 

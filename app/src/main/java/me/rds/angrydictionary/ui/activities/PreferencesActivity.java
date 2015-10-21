@@ -83,7 +83,6 @@ public class PreferencesActivity extends ActionBarActivity {
         setContentView(R.layout.act_preferences);
         findViews();
         engineViews();
-
     }
 
     private void findViews() {

@@ -3,7 +3,6 @@ package me.rds.angrydictionary.services.network;
 import android.app.IntentService;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.CalendarContract;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -67,8 +66,8 @@ public final class UpdateDBService extends IntentService{
     }
 
     private void updateDictionary() {
-        if(AppPrefs.getLastDictUpdate(UpdateDBService.this)!=0&&(Calendar.getInstance().getTimeInMillis()- AppPrefs.getLastDictUpdate(UpdateDBService.this)<AppConsts.MIN_TIME_WAIT_UPDATEms))
-            return;
+//        if(AppPrefs.getLastDictUpdate(UpdateDBService.this)!=0&&(Calendar.getInstance().getTimeInMillis()- AppPrefs.getLastDictUpdate(UpdateDBService.this)<AppConsts.MIN_TIME_WAIT_UPDATEms))
+//            return;
         new HttpsClient().start(AppConsts.LINK_DB_LIST, false,new OnGetContentListener() {
             @Override
             public void onGetContent(String msg, Exception error) {
@@ -83,7 +82,6 @@ public final class UpdateDBService extends IntentService{
                     intentAnswer.putExtra(AppIntents.Extra.SERVER_RESPONSE, "ERROR ON UPDATE " + e.toString());
                     LocalBroadcastManager.getInstance(UpdateDBService.this).sendBroadcast(intentAnswer);
                 }finally{
-                    AppPrefs.setLastDictUpdate(UpdateDBService.this, Calendar.getInstance().getTimeInMillis());
                     startService(new Intent(UpdateDBService.this, ClockService.class));
                 }
             }
@@ -95,11 +93,11 @@ public final class UpdateDBService extends IntentService{
         long last= AppPrefs.getLastDictUpdate(UpdateDBService.this);
         for (int i=0; i<arr.files.length; i++){
             if (last<arr.files[i].timestamp) {
+                AppPrefs.setLastDictUpdate(UpdateDBService.this, Calendar.getInstance().getTimeInMillis());
                 saveDB(arr.files[i].url);
                 saveMp3Zip(arr.files[i].mp3ZipUrl);
             }
         }
-
     }
 
     private void saveDB(String url) throws RuntimeException, Exception {

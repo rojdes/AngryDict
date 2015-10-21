@@ -131,10 +131,11 @@ public class DictionaryWindow {
 
     private void initRootLayout(View view) {
        View v=view.findViewById(R.id.wnd_root_layout);
-        int alpha=255 * AppPrefs.getTransparency(mContext) / 100;
+       int trans=AppPrefs.getTransparency(mContext);
+        int alpha= (trans==0)?0x00:(0x1000000* trans);
 
-        ColorDrawable cl1= new ColorDrawable(mContext.getResources().getColor(R.color.transtion_item1)+alpha*0x1000000);
-        ColorDrawable cl2= new ColorDrawable(mContext.getResources().getColor(R.color.transtion_item2)+alpha*0x1000000);
+        ColorDrawable cl1= new ColorDrawable(mContext.getResources().getColor(R.color.transtion_item1)+alpha);
+        ColorDrawable cl2= new ColorDrawable(mContext.getResources().getColor(R.color.transtion_item2)+alpha);
         TransitionDrawable transition = new TransitionDrawable( new Drawable[]{cl1,cl2});
         if(Build.VERSION.SDK_INT<16)
            v.setBackgroundDrawable(transition);
